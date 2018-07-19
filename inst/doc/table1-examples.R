@@ -15,10 +15,10 @@ melanoma2$status <-
                   "Melanoma death", 
                   "Non-melanoma death"))
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ factor(sex) + age + factor(ulcer) + thickness | status, data=melanoma2)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 melanoma2$sex <- 
   factor(melanoma2$sex, levels=c(1,0),
          labels=c("Male", 
@@ -63,7 +63,7 @@ my.render.cat <- function(x) {
         sprintf("%d (%0.0f %%)", FREQ, PCT))))
 }
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(strata, labels, groupspan=c(1, 1, 2),
        render.continuous=my.render.cont, render.categorical=my.render.cat)
 
@@ -89,22 +89,22 @@ label(dat$treat) <- "Treatment Group"
 units(dat$age)   <- "years"
 units(dat$wt)    <- "kg"
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ age + sex + wt | treat, data=dat)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ age + sex + wt | treat, data=dat, overall=F)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ age + wt | treat*sex, data=dat)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ age + wt | sex*treat, data=dat)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ treat + age + sex + wt, data=dat)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 dat$dose <- (dat$treat != "Placebo")*sample(1:2, n, replace=T)
 dat$dose <- factor(dat$dose, labels=c("Placebo", "5 mg", "10 mg"))
 
@@ -118,30 +118,95 @@ labels <- list(
 
 table1(strata, labels, groupspan=c(1, 3, 1))
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(strata, labels, groupspan=c(1, 3, 1),
        render.continuous=c(.="Mean (CV%)", .="Median [Min, Max]",
                            "Geo. mean (Geo. CV%)"="GMEAN (GCV%)"))
 
-## ----results='asis'------------------------------------------------------
-table1(~ age + sex + wt | treat, data=dat, topclass="Rtable1 style2")
+## ------------------------------------------------------------------------
+rndr <- function(x, name, ...) {
+    if (!is.numeric(x)) return(render.categorical.default(x))
+    what <- switch(name,
+        age = "Median [Min, Max]",
+        wt  = "Mean (SD)")
+    parse.abbrev.render.code(c("", what))(x)
+}
 
-## ----results='asis'------------------------------------------------------
-table1(~ age + sex + wt | treat, data=dat, topclass="Rtable1 style3")
+table1(~ age + sex + wt | treat, data=dat,
+       render=rndr)
+
+## ------------------------------------------------------------------------
+table1(~ age + sex + wt | treat, data=dat, topclass="Rtable1-zebra")
+
+## ------------------------------------------------------------------------
+table1(~ age + sex + wt | treat, data=dat, topclass="Rtable1-grid")
+
+## ------------------------------------------------------------------------
+table1(~ age + sex + wt | treat, data=dat, topclass="Rtable1-grid Rtable1-shade Rtable1-times")
+
+## ---- echo=F-------------------------------------------------------------
+table1(~ age + sex + wt | treat, data=dat, topclass="custom")
+
+## ------------------------------------------------------------------------
+library(MatchIt) 
+data(lalonde)
+
+lalonde$treat    <- factor(lalonde$treat, levels=c(0, 1, 2), labels=c("Control", "Treatment", "P-value"))
+lalonde$black    <- factor(lalonde$black)
+lalonde$hispan   <- factor(lalonde$hispan)
+lalonde$married  <- factor(lalonde$married)
+lalonde$nodegree <- factor(lalonde$nodegree)
+lalonde$black    <- as.logical(lalonde$black == 1)
+lalonde$hispan   <- as.logical(lalonde$hispan == 1)
+lalonde$married  <- as.logical(lalonde$married == 1)
+lalonde$nodegree <- as.logical(lalonde$nodegree == 1)
+
+label(lalonde$black)    <- "Black"
+label(lalonde$hispan)   <- "Hispanic"
+label(lalonde$married)  <- "Married"
+label(lalonde$nodegree) <- "No high school diploma"
+label(lalonde$age)      <- "Age"
+label(lalonde$re74)     <- "1974 Income"
+label(lalonde$re75)     <- "1975 Income"
+label(lalonde$re78)     <- "1978 Income"
+units(lalonde$age)      <- "years"
+
+rndr <- function(x, name, ...) {
+    if (length(x) == 0) {
+        y <- lalonde[[name]]
+        s <- rep("", length(render.default(x=y, name=name, ...)))
+        if (is.numeric(y)) {
+            p <- t.test(y ~ lalonde$treat)$p.value
+        } else {
+            p <- chisq.test(table(y, droplevels(lalonde$treat)))$p.value
+        }
+        s[2] <- sub("<", "&lt;", format.pval(p, digits=3, eps=0.001))
+        s
+    } else {
+        render.default(x=x, name=name, ...)
+    }
+}
+
+rndr.strat <- function(label, n, ...) {
+    ifelse(n==0, label, render.strat.default(label, n, ...))
+}
+
+table1(~ age + black + hispan + married + nodegree + re74 + re75 + re78 | treat,
+    data=lalonde, droplevels=F, render=rndr, render.strat=rndr.strat, overall=F)
 
 ## ------------------------------------------------------------------------
 dat <- expand.grid(i=1:50, group=LETTERS[1:3])
 dat <- cbind(dat, matrix(round(exp(rnorm(6*nrow(dat))), 1), nrow=nrow(dat)))
 names(dat)[3:8] <- paste0("V", 1:6)
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ V1 + V2 + V3 + V4 + V5 + V6 | group, data=dat,
-       topclass="Rtable1 style3 style4",
+       topclass="Rtable1-grid Rtable1-center",
        render="Mean (CV%)<br/>Median [Min, Max]<br/>GMean (GCV%)")
 
-## ----results='asis'------------------------------------------------------
+## ------------------------------------------------------------------------
 table1(~ V1 + V2 + V3 + V4 + V5 + V6 | group, data=dat,
-       topclass="Rtable1 style3 style4",
+       topclass="Rtable1-grid Rtable1-center",
        render="Mean (CV%)<br/>Median [Min, Max]<br/>GMean (GCV%)",
        transpose=TRUE)
 

@@ -72,6 +72,7 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #'
 #' @param x A vector or numeric, factor, character or logical values.
 #' @param useNA For categorical \code{x}, should missing values be treated as a category?
+#' @param quantile.type An integer from 1 to 9, passed as the \code{type} argument to function \code{\link[stats]{quantile}}.
 #'
 #' @return A list. For numeric \code{x}, the list contains the numeric elements:
 #' \itemize{
@@ -81,11 +82,16 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #'   \item \code{SD}: the standard deviation of the non-missing values
 #'   \item \code{MIN}: the minimum of the non-missing values
 #'   \item \code{MEDIAN}: the median of the non-missing values
-#'   \item \code{Qxx}: various quantiles (percentiles) of the non-missing values (Q01: 1%, Q02.5: 2.5%, Q05: 5%, Q10: 10%, Q25: 25%, Q50: 50%, Q75: 75%, Q90: 90%, Q95: 95%, Q97.5: 97.5%, Q99: 99%)
-#'   \item \code{IQR}: the inter-quartile range of the non-missing values
 #'   \item \code{CV}: the percent coefficient of variation of the non-missing values
 #'   \item \code{GMEAN}: the geometric mean of the non-missing values if non-negative, or \code{NA}
 #'   \item \code{GCV}: the percent geometric coefficient of variation of the non-missing values if non-negative, or \code{NA}
+#'   \item \code{qXX}: various quantiles (percentiles) of the non-missing values (q01: 1\%, q02.5: 2.5\%, q05: 5\%, q10: 10\%, q25: 25\% (first quartile), q33.3: 33.33333\% (first tertile), q50: 50\% (median, or second quartile), q66.7: 66.66667\% (second tertile), q75: 75\% (third quartile), q90: 90\%, q95: 95\%, q97.5: 97.5\%, q99: 99\%)
+#'   \item \code{Q1}: the first quartile of the non-missing values (alias \code{q25})
+#'   \item \code{Q2}: the second quartile of the non-missing values (alias \code{q50} or \code{Median})
+#'   \item \code{Q3}: the third quartile of the non-missing values (alias \code{q75})
+#'   \item \code{IQR}: the inter-quartile range of the non-missing values (i.e., \code{Q3 - Q1})
+#'   \item \code{T1}: the first tertile of the non-missing values (alias \code{q33.3})
+#'   \item \code{T2}: the second tertile of the non-missing values (alias \code{q66.7})
 #' }
 #' If \code{x} is categorical (i.e. factor, character or logical), the list
 #' contains a sublist for each category, where each sublist contains the
@@ -107,7 +113,7 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #' @keywords utilities
 #' @export
 #' @importFrom stats sd median quantile IQR na.omit
-stats.default <- function(x, useNA=NULL) {
+stats.default <- function(x, useNA=NULL, quantile.type=7) {
     if (is.logical(x)) {
         x <- factor(1-x, levels=c(0, 1), labels=c("Yes", "No"))
     }
@@ -123,49 +129,59 @@ stats.default <- function(x, useNA=NULL) {
             NMISS=sum(is.na(x)),
             MEAN=NA,
             SD=NA,
-            MIN=NA,
-            MEDIAN=NA,
-            MAX=NA,
-            Q01=NA,
-            Q025=NA,
-            Q05=NA,
-            Q10=NA,
-            Q25=NA,
-            Q50=NA,
-            Q75=NA,
-            Q90=NA,
-            Q95=NA,
-            Q975=NA,
-            Q99=NA,
-            IQR=NA,
             CV=NA,
             GMEAN=NA,
-            GCV=NA)
+            GCV=NA,
+            MEDIAN=NA,
+            MIN=NA,
+            MAX=NA,
+            q01=NA,
+            q025=NA,
+            q05=NA,
+            q10=NA,
+            q25=NA,
+            q50=NA,
+            q75=NA,
+            q90=NA,
+            q95=NA,
+            q975=NA,
+            q99=NA,
+            Q1=NA,
+            Q2=NA,
+            Q3=NA,
+            IQR=NA,
+            T1=NA,
+            T2=NA)
     } else if (is.numeric(x)) {
-        q <- quantile(x, probs=c(0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.975, 0.99), na.rm=TRUE)
+        q <- quantile(x, probs=c(0.01, 0.025, 0.05, 0.1, 0.25, 1/3, 0.5, 2/3, 0.75, 0.9, 0.95, 0.975, 0.99), na.rm=TRUE, type=quantile.type)
         list(
             N=sum(!is.na(x)),
             NMISS=sum(is.na(x)),
             MEAN=mean(x, na.rm=TRUE),
             SD=sd(x, na.rm=TRUE),
-            MIN=min(x, na.rm=TRUE),
-            MEDIAN=median(x, na.rm=TRUE),
-            MAX=max(x, na.rm=TRUE),
-            Q01=q["1%"],
-            Q02.5=q["2.5%"],
-            Q05=q["5%"],
-            Q10=q["10%"],
-            Q25=q["25%"],
-            Q50=q["50%"],
-            Q75=q["75%"],
-            Q90=q["90%"],
-            Q95=q["95%"],
-            Q97.5=q["97.5%"],
-            Q99=q["99%"],
-            IQR=IQR(x, na.rm=TRUE),
             CV=100*sd(x, na.rm=TRUE)/abs(mean(x, na.rm=TRUE)),
             GMEAN=if (any(na.omit(x) <= 0)) NA else exp(mean(log(x), na.rm=TRUE)),
-            GCV=if (any(na.omit(x) <= 0)) NA else 100*sqrt(exp(sd(log(x), na.rm=TRUE)^2) -1))
+            GCV=if (any(na.omit(x) <= 0)) NA else 100*sqrt(exp(sd(log(x), na.rm=TRUE)^2) -1),
+            MEDIAN=median(x, na.rm=TRUE),
+            MIN=min(x, na.rm=TRUE),
+            MAX=max(x, na.rm=TRUE),
+            q01=q["1%"],
+            q02.5=q["2.5%"],
+            q05=q["5%"],
+            q10=q["10%"],
+            q25=q["25%"],
+            q50=q["50%"],
+            q75=q["75%"],
+            q90=q["90%"],
+            q95=q["95%"],
+            q97.5=q["97.5%"],
+            q99=q["99%"],
+            Q1=q["25%"],
+            Q2=q["50%"],
+            Q3=q["75%"],
+            IQR=q["75%"] - q["25%"],
+            T1=q["33.33333%"],
+            T2=q["66.66667%"])
     } else {
         stop(paste("Unrecognized variable type:", class(x)))
     }
@@ -216,6 +232,11 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
         ifelse(ndig > digits, cx, signif_pad(x, digits=digits,
                 round.integers=round.integers, round5up=round5up))
     }
+    format.percent <- function(x, digits) {
+        if (x == 0) "0"
+        else if (x == 100) "100"
+        else formatC(x, digits=digits.pct, format="f")
+    }
     if (!is.list(x)) {
         stop("Expecting a list")
     }
@@ -239,7 +260,7 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
         pr <- c("PCT", "CV", "GCV")   # Percentages
         pr <- pr[pr %in% names(x)]
         pr <- pr[!is.na(x[pr])]
-        r[pr] <- lapply(as.numeric(x[pr]), formatC, digits=digits.pct, format="f")
+        r[pr] <- lapply(as.numeric(x[pr]), format.percent, digits=digits.pct)
         r
     }
 }
@@ -426,7 +447,7 @@ function(code, ...) {
 #' @export
 render.continuous.default <- function(x, ...) {
     with(stats.apply.rounding(stats.default(x), ...), c("",
-        "Mean (SD)"=sprintf("%s (%s)", MEAN, SD),
+        "Mean (SD)"         = sprintf("%s (%s)", MEAN, SD),
         "Median [Min, Max]" = sprintf("%s [%s, %s]", MEDIAN, MIN, MAX)))
 }
 
@@ -557,6 +578,7 @@ render.strat.default <- function(label, n, transpose=F) {
 #' @keywords utilities
 #' @export
 table.rows <- function(x, row.labels=rownames(x), th=FALSE, class=NULL, rowlabelclass="rowlabel", firstrowclass="firstrow", lastrowclass="lastrow", ...) {
+    if (is.null(row.labels)) row.labels <- ""
     td <- table.data(x=x, row.labels=row.labels, th=th, class=class, rowlabelclass=rowlabelclass, firstrowclass=firstrowclass, lastrowclass=lastrowclass, ...)
     tr <- paste("<tr>\n", td, "\n</tr>\n", sep="")
     paste(tr, sep="", collapse="")
@@ -675,7 +697,7 @@ has.units <- function(x) {
 #' facilitate this, some tags (such as row labels) are given specific classes
 #' for easy CSS selection.
 #' 
-#' @details For the default version, is is expected that \code{x} is a named,
+#' @details For the default version, is is expected that \code{x} is a named
 #' list of \code{data.frame}s, one for each stratum, with names corresponding to
 #' strata labels.
 #'
@@ -691,13 +713,14 @@ has.units <- function(x) {
 #' @param transpose Logical. Should the table be transposed (i.e. strata as
 #' rows and variables as columns)?
 #' @param topclass A class attribute for the outermost (i.e. \code{<table>}) tag.
+#' @param footnote A character string to be added as a footnote to the table.
+#' The default \code{NULL} causes the footnote to be omitted.
 #' @param render A function to render the table cells (see Details).
-#' @param standalone Should a standalone HTML document be generated and
 #' immediately displayed? Otherwise an HTML fragment is printed to
 #' \code{\link{stdout}}.
 #' @param ... Further arguments, passed to \code{render}.
 #'
-#' @return None (invisible \code{NULL}). Called for its side effects.
+#' @return An object of class "table1".
 #'
 #' @examples
 #'
@@ -760,35 +783,15 @@ table1 <- function(x, ...) {
 
 #' @describeIn table1 The default interface, where \code{x} is a \code{data.frame}.
 #' @export
-table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", render=render.default, standalone=!isTRUE(getOption("knitr.in.progress")), ...) {
-    if (standalone) {
-        viewer <- getOption("viewer")
-        if (is.null(viewer)) {
-            viewer <- utils::browseURL
-        }
-        dir <- tempfile()
-        dir.create(dir)
-        html.file <- file.path(dir, "table1.html")
-        cat(file=html.file, append=TRUE, html.standalone.head)
-        utils::capture.output(file=html.file, append=TRUE,
-            .table1.internal(x = x,
-                labels       = labels,
-                groupspan    = groupspan,
-                rowlabelhead = rowlabelhead,
-                transpose    = transpose,
-                topclass     = topclass,
-                render       = render,...))
-        cat(file=html.file, append=TRUE, html.standalone.foot)
-        viewer(html.file)
-    } else {
-        .table1.internal(x = x,
-            labels       = labels,
-            groupspan    = groupspan,
-            rowlabelhead = rowlabelhead,
-            transpose    = transpose,
-            topclass     = topclass,
-            render       = render, ...)
-    }
+table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, render=render.default, ...) {
+    .table1.internal(x = x,
+        labels       = labels,
+        groupspan    = groupspan,
+        rowlabelhead = rowlabelhead,
+        transpose    = transpose,
+        topclass     = topclass,
+        footnote     = footnote,
+        render       = render, ...)
 }
 
 html.standalone.head <- '
@@ -878,7 +881,7 @@ html.standalone.foot <- '
 </html>
 '
 
-.table1.internal <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", render=render.default, render.strat=render.strat.default, ...) {
+.table1.internal <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, render=render.default, render.strat=render.strat.default, ...) {
     if (is.null(labels$strata)) {
         labels$strata <- names(x)
     }
@@ -937,9 +940,9 @@ html.standalone.foot <- '
     }
 
     if (is.null(topclass) || topclass=="") {
-        cat('<table>\n<thead>\n')
+        topclass <- ""
     } else if (is.character(topclass) && length(topclass)==1) {
-        cat(sprintf('<table class="%s">\n<thead>\n', topclass))
+        topclass <- sprintf(' class="%s"', topclass)
     } else {
         stop("topclass should be character and of length 1.")
     }
@@ -952,25 +955,99 @@ html.standalone.foot <- '
         thead0 <- sprintf('<th colspan="%d" class="grouplabel">%s</th>', groupspan, thead0)
         thead0 <- c('<th class="grouplabel"></th>', thead0)
         thead0 <- paste("<tr>\n", paste(thead0, sep="", collapse="\n"), "\n</tr>\n", sep="", collapse="")
-        cat(thead0)
+    } else {
+        thead0 <- ""
     }
 
     if (is.null(rowlabelhead)) rowlabelhead <- ""
-    cat(table.rows(thead, row.labels=rowlabelhead, th=T))
 
-    cat('</thead>\n<tbody>\n')
+    x <- paste0(
+        sprintf('<table%s>\n<thead>\n', topclass),
+        thead0,
+        table.rows(thead, row.labels=rowlabelhead, th=T),
+        '</thead>\n<tbody>\n',
+        paste(sapply(tbody, table.rows), collapse=""),
+        '</tbody>\n</table>\n')
 
-    cat(paste(sapply(tbody, table.rows), collapse=""))
+    if (!is.null(footnote)) {
+        footnote <- sprintf('<p class="Rtable1-footnote">%s</p>\n', footnote)
+        x <- paste0(x, footnote)
+    }
 
-    cat('</tbody>\n</table>\n')
+    structure(x, class=c("table1", "html", "character"), html=TRUE)
+}
 
+#' Print \code{table1} object.
+#' @param x An object returned by \code{\link{table1}}.
+#' @param ... Further arguments passed on to other \code{print} methods.
+#' @return Returns \code{x} invisibly.
+#' @details In an interactive context, the rendered table will be displayed in
+#' a web browser. Otherwise, the HTML code will be printed as text.
+#' @export
+print.table1 <- function(x, ...) {
+    if (interactive()) {
+        has_htmltools <- requireNamespace("htmltools", quietly=TRUE)
+        if (has_htmltools) {
+            x <- htmltools::HTML(x)
+            default.style <- htmltools::htmlDependency("table1", "1.0",
+                src=system.file(package="table1", "table1_defaults_1.0"),
+                stylesheet="table1_defaults.css")
+            x <- htmltools::div(class="Rtable1", default.style, x)
+            x <- htmltools::browsable(x)
+            print(x, ...) # Calls htmltools:::print.html(x, ...)
+        } else {
+            # Fallback to old method without htmltools...
+            viewer <- getOption("viewer")
+            if (is.null(viewer)) {
+                viewer <- utils::browseURL
+            }
+            dir <- tempfile()
+            dir.create(dir)
+            html.file <- file.path(dir, "table1.html")
+            cat(file=html.file, append=TRUE, html.standalone.head)
+            cat(file=html.file, append=TRUE, as.character(x))
+            cat(file=html.file, append=TRUE, html.standalone.foot)
+            viewer(html.file)
+        }
+    } else {
+        cat(x)
+    }
+    invisible(x)
+}
+
+#' Method for printing in a \code{knitr} context.
+#' @param x An object returned by \code{\link{table1}}.
+#' @param ... Further arguments passed on to \code{knitr::knit_print}.
+#' @importFrom knitr knit_print
+#' @export
+knit_print.table1 <- function(x, ...) {
+    knit_to_html <-
+        !is.null(knitr::opts_knit$get("rmarkdown.pandoc.to")) &&
+        grepl("^html", knitr::opts_knit$get("rmarkdown.pandoc.to"))
+
+    if (knit_to_html) {
+        has_htmltools <- requireNamespace("htmltools", quietly=TRUE)
+        if (has_htmltools) {
+            x <- htmltools::HTML(x)
+            default.style <- htmltools::htmlDependency("table1", "1.0",
+                src=system.file(package="table1", "table1_defaults_1.0"),
+                stylesheet="table1_defaults.css")
+            x <- htmltools::div(class="Rtable1", default.style, x)
+            knitr::knit_print(x, ...)
+        } else {
+            # Fallback to old method without htmltools...
+            knitr::knit_print(knitr::asis_output(x), ...)
+        }
+    } else {
+        knitr::knit_print(as.character(x), ...)
+    }
 }
 
 #' @describeIn table1 The \code{formula} interface.
 #' @export
 #' @importFrom stats formula model.frame na.pass
 #' @importFrom Formula Formula
-table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpose=FALSE, droplevels=TRUE, topclass="Rtable1", render=render.default, standalone=!isTRUE(getOption("knitr.in.progress")), ...) {
+table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpose=FALSE, droplevels=TRUE, topclass="Rtable1", footnote=NULL, render=render.default, ...) {
     f <- Formula(x)
     m1 <- model.frame(formula(f, rhs=1), data=data, na.action=na.pass)
     for (i in 1:ncol(m1)) {
@@ -987,32 +1064,44 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
         if (droplevels) {
             m2 <- lapply(m2, droplevels)
         }
-        colspan <- c(cumprod(sapply(m2, nlevels)[-1]), 1)
-        collabel <- lapply(m2, levels)
 
-        if (length(colspan) > 1) {
-            if (length(colspan) > 2) {
+        if (length(m2) > 1) {
+            if (length(m2) > 2) {
                 stop("Only 1 level of nesting is supported")
             }
-            grouplabel <- collabel[[1]]
+            collabels <- tapply(m2[[2]], m2[[1]], levels, simplify=F)
+            if (droplevels) {
+                coln <- tapply(m2[[2]], m2[[1]], table, simplify=F)
+                collabels <- mapply(function(x, y) x[y > 0], collabels, coln, SIMPLIFY=F)
+            }
+            grouplabel <- names(collabels)
+            groupspan <- sapply(collabels, length)
+            stratlabel <- unlist(collabels)
             if (!is.null(overall) && overall != FALSE) {
                 grouplabel <- c(grouplabel, overall)
+                groupspan <- c(groupspan, nlevels(m2[[2]]))
+                stratlabel <- c(stratlabel, levels(m2[[2]]))
             }
-            groupspan <- rep(colspan[1], length(grouplabel))
-            stratlabel <- rep(collabel[[2]], length.out=groupspan[1]*length(grouplabel))
         } else {
-            stratlabel <- collabel[[1]]
+            stratlabel <- levels(m2[[1]])
             if (!is.null(overall) && overall != FALSE) {
                 stratlabel <- c(stratlabel, overall)
             }
         }
     } else {
         m2 <- NULL
+        if (is.null(overall) || (is.logical(overall) && overall == FALSE)) {
+            stop("Table has no columns?!")
+        }
         stratlabel <- overall 
     }
 
     if (!is.null(m2)) {
         strata <- split(m1, rev(m2))
+        if (droplevels) {
+            stratn <- sapply(strata, nrow)
+            strata[stratn == 0] <- NULL
+        }
         if (!is.null(overall) && overall != FALSE) {
             if (length(m2) > 1) {
                 strata <- c(strata, split(m1, data.frame(m2[[2]], overall="overall")))
@@ -1037,16 +1126,16 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
             rowlabelhead=rowlabelhead,
             transpose=transpose,
             topclass=topclass,
-            render=render,
-            standalone=standalone, ...)
+            footnote=footnote,
+            render=render, ...)
     } else {
         table1.default(x=strata,
             labels=labels,
             rowlabelhead=rowlabelhead,
             transpose=transpose,
             topclass=topclass,
-            render=render,
-            standalone=standalone, ...)
+            footnote=footnote,
+            render=render, ...)
     }
 }
 
