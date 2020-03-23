@@ -1,3 +1,23 @@
+# table1 1.2
+
+* Added `caption` argument to generate a caption for the table.
+
+* Set `render.missing=NULL` to ignore missing values.
+
+* Added `SUM` to `stats.default` for continuous variables.
+
+* Added `PCTnoNA` to `stats.default` and `na.is.category` option to `render.categorical.default`.
+
+* Changed (n=XX) to (N=XX) in default table header.
+
+* Improved error handling in function `eqcut`.
+
+* Function `signif_pad` can now use different decimal marks to support different locales.
+
+* Added function `round_pad` (similar to `signif_pad` but for fixed rounding).
+
+* Added function `t1read`.
+
 # table1 1.1
 
 * Added `quantile.type` argument to `stats.default` to allow selecting which quantile type is computed.

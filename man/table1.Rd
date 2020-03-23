@@ -8,13 +8,31 @@
 \usage{
 table1(x, ...)
 
-\method{table1}{default}(x, labels, groupspan = NULL, rowlabelhead = "",
-  transpose = FALSE, topclass = "Rtable1", footnote = NULL,
-  render = render.default, ...)
+\method{table1}{default}(
+  x,
+  labels,
+  groupspan = NULL,
+  rowlabelhead = "",
+  transpose = FALSE,
+  topclass = "Rtable1",
+  footnote = NULL,
+  caption = NULL,
+  render = render.default,
+  ...
+)
 
-\method{table1}{formula}(x, data, overall = "Overall", rowlabelhead = "",
-  transpose = FALSE, droplevels = TRUE, topclass = "Rtable1",
-  footnote = NULL, render = render.default, ...)
+\method{table1}{formula}(
+  x,
+  data,
+  overall = "Overall",
+  rowlabelhead = "",
+  transpose = FALSE,
+  droplevels = TRUE,
+  topclass = "Rtable1",
+  footnote = NULL,
+  render = render.default,
+  ...
+)
 }
 \arguments{
 \item{x}{An object, typically a \code{formula} or list of \code{data.frame}s.}
@@ -35,9 +53,10 @@ rows and variables as columns)?}
 \item{footnote}{A character string to be added as a footnote to the table.
 The default \code{NULL} causes the footnote to be omitted.}
 
-\item{render}{A function to render the table cells (see Details).
-immediately displayed? Otherwise an HTML fragment is printed to
-\code{\link{stdout}}.}
+\item{caption}{A character string to be added as a caption to the table.
+The default \code{NULL} causes the caption to be omitted.}
+
+\item{render}{A function to render the table cells (see Details).}
 
 \item{data}{For the formula interface, a \code{data.frame} from which the
 variables in \code{x} should be taken.}

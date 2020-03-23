@@ -1,27 +1,36 @@
-#' Round numbers to specified significant digits with 0-padding.
+#' Round numbers with 0-padding.
 #'
-#' A utility function to round numbers to a specified number of
-#' significant digits.  Zeros are kept if they are significant.
+#' Utility functions to round numbers, similar the the base functions \code{signif}
+#' and \code{round}, but resulting in character representations that keep zeros at
+#' the right edge if they are significant.
 #'
 #' @param x A numeric vector.
-#' @param digits An integer specifying the number of significant digits to keep.
+#' @param digits An integer specifying the number of significant digits to keep
+#' (for \code{signif_pad}) or the number of digits after the decimal point (for
+#' \code{round_pad}).
 #' @param round.integers Should rounding be limited to digits to the right of
 #' the decimal point?
 #' @param round5up Should numbers with 5 as the last digit always be rounded
 #' up? The standard R approach is "go to the even digit" (IEC 60559 standard,
 #' see \code{\link{round}}), while some other softwares (e.g. SAS, Excel)
 #' always round up.
+#' @param dec The character symbol to use as decimal mark (locale
+#' specific).
+#' @param ... Further options, passed to \code{formatC} (which is used
+#' internally). Not all options will work, but some might be useful (e.g.
+#' \code{big.mark}).
 #'
 #' @return A character vector containing the rounded numbers.
 #'
 #' @seealso
 #' \code{\link{signif}}
+#' \code{\link{round}}
 #' \code{\link{formatC}}
 #' \code{\link{prettyNum}}
 #' \code{\link{format}}
 #'
 #' @examples
-#' x <- c(0.9001, 12345, 1.2, 1., 0.1)
+#' x <- c(0.9001, 12345, 1.2, 1., 0.1, 0.00001 , 1e5)
 #' signif_pad(x, digits=3)
 #' signif_pad(x, digits=3, round.integers=TRUE)
 #' 
@@ -40,27 +49,24 @@
 #' 
 #' @keywords utilities
 #' @export
-signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
+signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE, dec=getOption("OutDec"), ...) {
     eps <- if (round5up) x*(10^(-(digits + 3))) else 0
-    if (round.integers) {
-        cx <- as.character(signif(x+eps, digits))  # Character representation of x
-    } else {
-        cx <- ifelse(x >= 10^digits, as.character(round(x)), as.character(signif(x+eps, digits)))  # Character representation of x
-   }
+
+    # Character representation of x
+    cx <- ifelse(x >= 10^digits & isFALSE(round.integers),
+        formatC(round(x), digits=digits, format="fg", flag="#", decimal.mark=dec, ...),
+        formatC(signif(x+eps, digits), digits=digits, format="fg", flag="#", decimal.mark=dec, ...))
 
     cx[is.na(x)] <- "0"                    # Put in a dummy value for missing x
+    cx <- gsub("[^0-9]*$", "", cx)         # Remove any trailing non-digit characters
+    ifelse(is.na(x), NA, cx)
+}
 
-    d <- gsub("[^0-9]", "", cx)            # The 'digits' of x
-    d <- sub("^0*", "", d)                 # Remove any leading zeros
-    nd <- nchar(d)                         # How many actual digits
-    nd[cx=="0"] <- 1                       # Special case "0"
-    npad <- pmax(0, digits - nd)           # How many digits are missing
-    pad <- sapply(npad, function(n) paste(rep("0", times=n), collapse=""))
-
-    has.dec <- grepl("\\.", cx)                      #  Does cx already contain a decimal point?
-    add.dec <- ifelse(!has.dec & npad > 0, ".", "")  #  If not, and if padding is required, we need to add a decimal point first
-
-    ifelse(is.na(x), NA, paste(cx, add.dec, pad, sep=""))
+#' @rdname signif_pad
+#' @export
+round_pad <- function (x, digits=2, round5up=TRUE, dec=getOption("OutDec"), ...) {
+    eps <- if (round5up) 10^(-(digits + 3)) else 0
+    formatC(round(x + eps, digits), digits=digits, format="f", flag="0", decimal.mark=dec, ...)
 }
 
 #' Compute some basic descriptive statistics.
@@ -71,21 +77,28 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #' zero counts are retained.
 #'
 #' @param x A vector or numeric, factor, character or logical values.
-#' @param useNA For categorical \code{x}, should missing values be treated as a category?
-#' @param quantile.type An integer from 1 to 9, passed as the \code{type} argument to function \code{\link[stats]{quantile}}.
+#' @param quantile.type An integer from 1 to 9, passed as the \code{type}
+#' argument to function \code{\link[stats]{quantile}}.
+#' @param ... Further arguments (ignored).
 #'
 #' @return A list. For numeric \code{x}, the list contains the numeric elements:
 #' \itemize{
 #'   \item \code{N}: the number of non-missing values
 #'   \item \code{NMISS}: the number of missing values
+#'   \item \code{SUM}: the sum of the non-missing values
 #'   \item \code{MEAN}: the mean of the non-missing values
 #'   \item \code{SD}: the standard deviation of the non-missing values
 #'   \item \code{MIN}: the minimum of the non-missing values
 #'   \item \code{MEDIAN}: the median of the non-missing values
 #'   \item \code{CV}: the percent coefficient of variation of the non-missing values
 #'   \item \code{GMEAN}: the geometric mean of the non-missing values if non-negative, or \code{NA}
-#'   \item \code{GCV}: the percent geometric coefficient of variation of the non-missing values if non-negative, or \code{NA}
-#'   \item \code{qXX}: various quantiles (percentiles) of the non-missing values (q01: 1\%, q02.5: 2.5\%, q05: 5\%, q10: 10\%, q25: 25\% (first quartile), q33.3: 33.33333\% (first tertile), q50: 50\% (median, or second quartile), q66.7: 66.66667\% (second tertile), q75: 75\% (third quartile), q90: 90\%, q95: 95\%, q97.5: 97.5\%, q99: 99\%)
+#'   \item \code{GCV}: the percent geometric coefficient of variation of the
+#'   non-missing values if non-negative, or \code{NA}
+#'   \item \code{qXX}: various quantiles (percentiles) of the non-missing
+#'   values (q01: 1\%, q02.5: 2.5\%, q05: 5\%, q10: 10\%, q25: 25\% (first
+#'   quartile), q33.3: 33.33333\% (first tertile), q50: 50\% (median, or second
+#'   quartile), q66.7: 66.66667\% (second tertile), q75: 75\% (third quartile),
+#'   q90: 90\%, q95: 95\%, q97.5: 97.5\%, q99: 99\%)
 #'   \item \code{Q1}: the first quartile of the non-missing values (alias \code{q25})
 #'   \item \code{Q2}: the second quartile of the non-missing values (alias \code{q50} or \code{Median})
 #'   \item \code{Q3}: the third quartile of the non-missing values (alias \code{q75})
@@ -98,7 +111,8 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #' numeric elements:
 #' \itemize{
 #'   \item \code{FREQ}: the frequency count
-#'   \item \code{PCT}: the percent relative frequency
+#'   \item \code{PCT}: the percent relative frequency, including NA in the denominator
+#'   \item \code{PCTnoNA}: the percent relative frequency, excluding NA from the denominator
 #' }
 #'
 #' @examples
@@ -113,20 +127,21 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE) {
 #' @keywords utilities
 #' @export
 #' @importFrom stats sd median quantile IQR na.omit
-stats.default <- function(x, useNA=NULL, quantile.type=7) {
+stats.default <- function(x, quantile.type=7, ...) {
     if (is.logical(x)) {
         x <- factor(1-x, levels=c(0, 1), labels=c("Yes", "No"))
     }
     if (is.factor(x) || is.character(x)) {
-        y <- table(x, useNA=useNA)
+        y <- table(x, useNA="no")
         nn <- names(y)
         nn[is.na(nn)] <- "Missing"
         names(y) <- nn
-        lapply(y, function(z) list(FREQ=z, PCT=100*z/length(x)))
+        lapply(y, function(z) list(FREQ=z, PCT=100*z/length(x), PCTnoNA=100*z/sum(y)))
     } else if (is.numeric(x) && sum(!is.na(x)) == 0) {
         list(
             N=sum(!is.na(x)),
             NMISS=sum(is.na(x)),
+            SUM=NA,
             MEAN=NA,
             SD=NA,
             CV=NA,
@@ -157,6 +172,7 @@ stats.default <- function(x, useNA=NULL, quantile.type=7) {
         list(
             N=sum(!is.na(x)),
             NMISS=sum(is.na(x)),
+            SUM=sum(x, na.rm=TRUE),
             MEAN=mean(x, na.rm=TRUE),
             SD=sd(x, na.rm=TRUE),
             CV=100*sd(x, na.rm=TRUE)/abs(mean(x, na.rm=TRUE)),
@@ -287,7 +303,8 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
 #' \code{\link{parse.abbrev.render.code}}.
 #' @param render.missing A function to render missing (i.e. \code{NA}) values.
 #' Can also be a \code{character} string, in which case it is passed to
-#' \code{\link{parse.abbrev.render.code}}.
+#' \code{\link{parse.abbrev.render.code}}. Set to \code{NULL} to ignore missing
+#' values.
 #' @param ... Further arguments, passed to \code{\link{stats.apply.rounding}}.
 #'
 #' @return A \code{character} vector. Each element is to be displayed in a
@@ -318,7 +335,7 @@ render.default <- function(x, name, missing=any(is.na(x)), transpose=F,
     if (is.character(render.categorical)) {
         render.categorical <- parse.abbrev.render.code(code=render.categorical, ...)
     }
-    if (is.character(render.missing)) {
+    if (!is.null(render.missing) && is.character(render.missing)) {
         render.missing <- parse.abbrev.render.code(code=render.missing, ...)
     }
     if (length(x) == 0) {
@@ -334,7 +351,7 @@ render.default <- function(x, name, missing=any(is.na(x)), transpose=F,
     } else {
         stop(paste("Unrecognized variable type:", class(x)))
     }
-    if (missing) {
+    if (missing && !is.null(render.missing)) {
         r <- c(r, do.call(render.missing, c(list(x=x), list(...))))
     }
     if (transpose) {
@@ -396,7 +413,7 @@ function(code, ...) {
     }
     names(codestr)[names(codestr) == "."] <- codestr[names(codestr) == "."]
     function(x, ...) {
-        s <- stats.apply.rounding(stats.default(x), ...)
+        s <- stats.apply.rounding(stats.default(x, ...), ...)
         g <- function(ss) {
             res <- codestr
             for (nm in names(ss)) {
@@ -446,7 +463,7 @@ function(code, ...) {
 #' @keywords utilities
 #' @export
 render.continuous.default <- function(x, ...) {
-    with(stats.apply.rounding(stats.default(x), ...), c("",
+    with(stats.apply.rounding(stats.default(x, ...), ...), c("",
         "Mean (SD)"         = sprintf("%s (%s)", MEAN, SD),
         "Median [Min, Max]" = sprintf("%s [%s, %s]", MEDIAN, MIN, MAX)))
 }
@@ -458,6 +475,8 @@ render.continuous.default <- function(x, ...) {
 #'
 #' @param x A vector of type \code{factor}, \code{character} or \code{logical}.
 #' @param ... Further arguments, passed to \code{\link{stats.apply.rounding}}.
+#' @param na.is.category Include missing values in the denominator for
+#' calculating percentages (the default) or omit them.
 #'
 #' @return A \code{character} vector. Each element is to be displayed in a
 #' separate cell in the table. The \code{\link{names}} of the vector are the
@@ -471,9 +490,9 @@ render.continuous.default <- function(x, ...) {
 #' render.categorical.default(y)
 #' @keywords utilities
 #' @export
-render.categorical.default <- function(x, ...) {
-    c("", sapply(stats.apply.rounding(stats.default(x), ...), function(y) with(y,
-        sprintf("%s (%s%%)", FREQ, PCT))))
+render.categorical.default <- function(x, ..., na.is.category=TRUE) {
+    c("", sapply(stats.apply.rounding(stats.default(x, ...), ...), function(y) with(y,
+        sprintf("%s (%s%%)", FREQ, if (na.is.category) PCT else PCTnoNA))))
 }
 
 #' Render missing values for table output.
@@ -496,7 +515,7 @@ render.categorical.default <- function(x, ...) {
 #' @keywords utilities
 #' @export
 render.missing.default <- function(x, ...) {
-    with(stats.apply.rounding(stats.default(is.na(x)), ...)$Yes,
+    with(stats.apply.rounding(stats.default(is.na(x), ...), ...)$Yes,
         c(Missing=sprintf("%s (%s%%)", FREQ, PCT)))
 }
 
@@ -545,7 +564,7 @@ render.varlabel <- function(x, transpose=F) {
 #' @keywords internal
 #' @export
 render.strat.default <- function(label, n, transpose=F) {
-    sprintf("<span class='stratlabel'>%s<br><span class='stratn'>(n=%d)</span></span>", label, n)
+    sprintf("<span class='stratlabel'>%s<br><span class='stratn'>(N=%d)</span></span>", label, n)
 }
 
 #' Convert to HTML table rows.
@@ -715,9 +734,9 @@ has.units <- function(x) {
 #' @param topclass A class attribute for the outermost (i.e. \code{<table>}) tag.
 #' @param footnote A character string to be added as a footnote to the table.
 #' The default \code{NULL} causes the footnote to be omitted.
+#' @param caption A character string to be added as a caption to the table.
+#' The default \code{NULL} causes the caption to be omitted.
 #' @param render A function to render the table cells (see Details).
-#' immediately displayed? Otherwise an HTML fragment is printed to
-#' \code{\link{stdout}}.
 #' @param ... Further arguments, passed to \code{render}.
 #'
 #' @return An object of class "table1".
@@ -783,7 +802,7 @@ table1 <- function(x, ...) {
 
 #' @describeIn table1 The default interface, where \code{x} is a \code{data.frame}.
 #' @export
-table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, render=render.default, ...) {
+table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, caption=NULL, render=render.default, ...) {
     .table1.internal(x = x,
         labels       = labels,
         groupspan    = groupspan,
@@ -791,97 +810,11 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
         transpose    = transpose,
         topclass     = topclass,
         footnote     = footnote,
+        caption      = caption,
         render       = render, ...)
 }
 
-html.standalone.head <- '
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="table1" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Table1 Output</title>
-<style type="text/css">
-table.Rtable1 {
-    font-family: "Arial", Arial, sans-serif;
-    font-size: 10pt;
-    border-collapse: collapse;
-    padding: 0px;
-    margin: 0px;
-    margin-bottom: 10pt;
-}
-.Rtable1 th, .Rtable1 td {
-    border: 0;
-    text-align: center;
-    padding: 0.5ex 1.5ex;
-    margin: 0px;
-}
-.Rtable1 thead>tr:first-child>th {
-    border-top: 2pt solid black;
-}
-.Rtable1 thead>tr:last-child>th {
-    border-bottom: 1pt solid black;
-}
-.Rtable1 tbody>tr:last-child>td {
-    border-bottom: 2pt solid black;
-}
-.Rtable1 th.grouplabel {
-    padding-left: 0;
-    padding-right: 0;
-}
-.Rtable1 th.grouplabel>div {
-    margin-left: 1.5ex;
-    margin-right: 1.5ex;
-    border-bottom: 1pt solid black;
-}
-.Rtable1 th.grouplabel:last-child>div {
-    margin-right: 0;
-}
-.Rtable1 .rowlabel {
-    text-align: left;
-    padding-left: 2.5ex;
-}
-.Rtable1 .firstrow.rowlabel {
-    padding-left: 0.5ex;
-    font-weight: bold;
-}
-.Rtable1.zebra tbody tr:nth-child(odd) {
-    background-color: #eee;
-}
-.Rtable1.grid th, .Rtable1.grid td {
-    border: 1pt solid black;
-}
-table.grayheader th {
-    background-color: #ccc;
-}
-.Rtable1.listing .stratn {
-    display: none;
-}
-.Rtable1.times {
-    font-family: "Times New Roman", Times, serif;
-}
-</style>
-</head>
-<body>
-'
-
-html.standalone.foot <- '
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-</body>
-</html>
-'
-
-.table1.internal <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, render=render.default, render.strat=render.strat.default, ...) {
+.table1.internal <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose=FALSE, topclass="Rtable1", footnote=NULL, caption=NULL, render=render.default, render.strat=render.strat.default, ...) {
     if (is.null(labels$strata)) {
         labels$strata <- names(x)
     }
@@ -961,8 +894,13 @@ html.standalone.foot <- '
 
     if (is.null(rowlabelhead)) rowlabelhead <- ""
 
+    if (!is.null(caption)) {
+        caption <- sprintf('<caption>%s</caption>\n', caption)
+    } else {
+        caption <- ""
+    }
     x <- paste0(
-        sprintf('<table%s>\n<thead>\n', topclass),
+        sprintf('<table%s>%s\n<thead>\n', topclass, caption),
         thead0,
         table.rows(thead, row.labels=rowlabelhead, th=T),
         '</thead>\n<tbody>\n',
@@ -986,29 +924,13 @@ html.standalone.foot <- '
 #' @export
 print.table1 <- function(x, ...) {
     if (interactive()) {
-        has_htmltools <- requireNamespace("htmltools", quietly=TRUE)
-        if (has_htmltools) {
-            x <- htmltools::HTML(x)
-            default.style <- htmltools::htmlDependency("table1", "1.0",
-                src=system.file(package="table1", "table1_defaults_1.0"),
-                stylesheet="table1_defaults.css")
-            x <- htmltools::div(class="Rtable1", default.style, x)
-            x <- htmltools::browsable(x)
-            print(x, ...) # Calls htmltools:::print.html(x, ...)
-        } else {
-            # Fallback to old method without htmltools...
-            viewer <- getOption("viewer")
-            if (is.null(viewer)) {
-                viewer <- utils::browseURL
-            }
-            dir <- tempfile()
-            dir.create(dir)
-            html.file <- file.path(dir, "table1.html")
-            cat(file=html.file, append=TRUE, html.standalone.head)
-            cat(file=html.file, append=TRUE, as.character(x))
-            cat(file=html.file, append=TRUE, html.standalone.foot)
-            viewer(html.file)
-        }
+        x <- htmltools::HTML(x)
+        default.style <- htmltools::htmlDependency("table1", "1.0",
+            src=system.file(package="table1", "table1_defaults_1.0"),
+            stylesheet="table1_defaults.css")
+        x <- htmltools::div(class="Rtable1", default.style, x)
+        x <- htmltools::browsable(x)
+        print(x, ...) # Calls htmltools:::print.html(x, ...)
     } else {
         cat(x)
     }
@@ -1026,18 +948,12 @@ knit_print.table1 <- function(x, ...) {
         grepl("^html", knitr::opts_knit$get("rmarkdown.pandoc.to"))
 
     if (knit_to_html) {
-        has_htmltools <- requireNamespace("htmltools", quietly=TRUE)
-        if (has_htmltools) {
-            x <- htmltools::HTML(x)
-            default.style <- htmltools::htmlDependency("table1", "1.0",
-                src=system.file(package="table1", "table1_defaults_1.0"),
-                stylesheet="table1_defaults.css")
-            x <- htmltools::div(class="Rtable1", default.style, x)
-            knitr::knit_print(x, ...)
-        } else {
-            # Fallback to old method without htmltools...
-            knitr::knit_print(knitr::asis_output(x), ...)
-        }
+        x <- htmltools::HTML(x)
+        default.style <- htmltools::htmlDependency("table1", "1.0",
+            src=system.file(package="table1", "table1_defaults_1.0"),
+            stylesheet="table1_defaults.css")
+        x <- htmltools::div(class="Rtable1", default.style, x)
+        knitr::knit_print(x, ...)
     } else {
         knitr::knit_print(as.character(x), ...)
     }

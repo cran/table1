@@ -4,10 +4,17 @@
 \alias{render.default}
 \title{Render values for table output.}
 \usage{
-render.default(x, name, missing = any(is.na(x)), transpose = F,
-  render.empty = "NA", render.continuous = render.continuous.default,
+render.default(
+  x,
+  name,
+  missing = any(is.na(x)),
+  transpose = F,
+  render.empty = "NA",
+  render.continuous = render.continuous.default,
   render.categorical = render.categorical.default,
-  render.missing = render.missing.default, ...)
+  render.missing = render.missing.default,
+  ...
+)
 }
 \arguments{
 \item{x}{A vector or numeric, factor, character or logical values.}
@@ -31,7 +38,8 @@ it is passed to \code{\link{parse.abbrev.render.code}}.}
 
 \item{render.missing}{A function to render missing (i.e. \code{NA}) values.
 Can also be a \code{character} string, in which case it is passed to
-\code{\link{parse.abbrev.render.code}}.}
+\code{\link{parse.abbrev.render.code}}. Set to \code{NULL} to ignore missing
+values.}
 
 \item{...}{Further arguments, passed to \code{\link{stats.apply.rounding}}.}
 }

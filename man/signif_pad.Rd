@@ -2,14 +2,26 @@
 % Please edit documentation in R/table1.R
 \name{signif_pad}
 \alias{signif_pad}
-\title{Round numbers to specified significant digits with 0-padding.}
+\alias{round_pad}
+\title{Round numbers with 0-padding.}
 \usage{
-signif_pad(x, digits = 3, round.integers = TRUE, round5up = TRUE)
+signif_pad(
+  x,
+  digits = 3,
+  round.integers = TRUE,
+  round5up = TRUE,
+  dec = getOption("OutDec"),
+  ...
+)
+
+round_pad(x, digits = 2, round5up = TRUE, dec = getOption("OutDec"), ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{digits}{An integer specifying the number of significant digits to keep.}
+\item{digits}{An integer specifying the number of significant digits to keep
+(for \code{signif_pad}) or the number of digits after the decimal point (for
+\code{round_pad}).}
 
 \item{round.integers}{Should rounding be limited to digits to the right of
 the decimal point?}
@@ -18,16 +30,24 @@ the decimal point?}
 up? The standard R approach is "go to the even digit" (IEC 60559 standard,
 see \code{\link{round}}), while some other softwares (e.g. SAS, Excel)
 always round up.}
+
+\item{dec}{The character symbol to use as decimal mark (locale
+specific).}
+
+\item{...}{Further options, passed to \code{formatC} (which is used
+internally). Not all options will work, but some might be useful (e.g.
+\code{big.mark}).}
 }
 \value{
 A character vector containing the rounded numbers.
 }
 \description{
-A utility function to round numbers to a specified number of
-significant digits.  Zeros are kept if they are significant.
+Utility functions to round numbers, similar the the base functions \code{signif}
+and \code{round}, but resulting in character representations that keep zeros at
+the right edge if they are significant.
 }
 \examples{
-x <- c(0.9001, 12345, 1.2, 1., 0.1)
+x <- c(0.9001, 12345, 1.2, 1., 0.1, 0.00001 , 1e5)
 signif_pad(x, digits=3)
 signif_pad(x, digits=3, round.integers=TRUE)
 
@@ -47,6 +67,7 @@ sub("[.]$", "", formatC(x, format="fg", flag="#", digits=3))
 }
 \seealso{
 \code{\link{signif}}
+\code{\link{round}}
 \code{\link{formatC}}
 \code{\link{prettyNum}}
 \code{\link{format}}
