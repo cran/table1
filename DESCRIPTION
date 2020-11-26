@@ -1,7 +1,7 @@
 Package: table1
 Type: Package
-Version: 1.2
-Date: 2020-03-21
+Version: 1.2.1
+Date: 2020-11-19
 Title: Tables of Descriptive Statistics in HTML
 Authors@R: person("Benjamin", "Rich", role=c("aut", "cre", "cph"), email="mail@benjaminrich.net")
 URL: https://github.com/benjaminrich/table1
@@ -11,12 +11,13 @@ Description: Create HTML tables of descriptive statistics, as one would expect
     article.
 License: GPL-3
 Imports: stats,Formula,knitr,htmltools,yaml
-Suggests: boot,MatchIt
+Suggests: boot,MatchIt,rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2.9000
+Encoding: UTF-8
+RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-03-22 20:46:19 UTC; brich
+Packaged: 2020-11-26 02:09:28 UTC; brich
 Author: Benjamin Rich [aut, cre, cph]
 Maintainer: Benjamin Rich <mail@benjaminrich.net>
 Repository: CRAN
-Date/Publication: 2020-03-23 07:20:03 UTC
+Date/Publication: 2020-11-26 05:40:02 UTC
