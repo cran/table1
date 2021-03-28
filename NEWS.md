@@ -1,3 +1,13 @@
+# table1 1.3
+
+* The headline feature is the `extra.col` option, which gives a flexible way to
+  add extra columns (e.g. P-values, SMD, ...) to the table (thanks to Matt
+  Leipzig for helping out with suggestions and testing on this).
+
+* Footnotes now appear in a <tfoot> tag for better placement.
+
+* General improvements to the documentation.
+
 # table1 1.2.1
 
 * Fixed issue that was causing vignette build to fail (due to changes made to the MatchIt package's lalonde data set).

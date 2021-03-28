@@ -151,11 +151,11 @@ table1(~ age + sex + wt | treat, data=dat, topclass="custom")
 library(MatchIt) 
 data(lalonde)
 
-lalonde$treat    <- factor(lalonde$treat, levels=c(0, 1, 2), labels=c("Control", "Treatment", "P-value"))
+lalonde$treat    <- factor(lalonde$treat, levels=c(0, 1), labels=c("Control", "Treatment"))
 lalonde$married  <- as.logical(lalonde$married == 1)
 lalonde$nodegree <- as.logical(lalonde$nodegree == 1)
 lalonde$race     <- factor(lalonde$race, levels=c("white", "black", "hispan"),
-			   labels=c("White", "Black", "Hispanic"))
+                                         labels=c("White", "Black", "Hispanic"))
 
 label(lalonde$race)     <- "Race"
 label(lalonde$married)  <- "Married"
@@ -166,28 +166,27 @@ label(lalonde$re75)     <- "1975 Income"
 label(lalonde$re78)     <- "1978 Income"
 units(lalonde$age)      <- "years"
 
-rndr <- function(x, name, ...) {
-    if (length(x) == 0) {
-        y <- lalonde[[name]]
-        s <- rep("", length(render.default(x=y, name=name, ...)))
-        if (is.numeric(y)) {
-            p <- t.test(y ~ lalonde$treat)$p.value
-        } else {
-            p <- chisq.test(table(y, droplevels(lalonde$treat)))$p.value
-        }
-        s[2] <- sub("<", "&lt;", format.pval(p, digits=3, eps=0.001))
-        s
+## -----------------------------------------------------------------------------
+pvalue <- function(x, ...) {
+    # Construct vectors of data y, and groups (strata) g
+    y <- unlist(x)
+    g <- factor(rep(1:length(x), times=sapply(x, length)))
+    if (is.numeric(y)) {
+        # For numeric variables, perform a standard 2-sample t-test
+        p <- t.test(y ~ g)$p.value
     } else {
-        render.default(x=x, name=name, ...)
+        # For categorical variables, perform a chi-squared test of independence
+        p <- chisq.test(table(y, g))$p.value
     }
+    # Format the p-value, using an HTML entity for the less-than sign.
+    # The initial empty string places the output on the line below the variable label.
+    c("", sub("<", "&lt;", format.pval(p, digits=3, eps=0.001)))
 }
 
-rndr.strat <- function(label, n, ...) {
-    ifelse(n==0, label, render.strat.default(label, n, ...))
-}
 
+## -----------------------------------------------------------------------------
 table1(~ age + race + married + nodegree + re74 + re75 + re78 | treat,
-    data=lalonde, droplevels=F, render=rndr, render.strat=rndr.strat, overall=F)
+    data=lalonde, overall=F, extra.col=list(`P-value`=pvalue))
 
 ## -----------------------------------------------------------------------------
 dat <- expand.grid(i=1:50, group=LETTERS[1:3])
