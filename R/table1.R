@@ -270,7 +270,7 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
     format.percent <- function(x, digits) {
         if (x == 0) "0"
         else if (x == 100) "100"
-        else formatC(x, digits=digits.pct, format="f")
+        else round_pad(x, digits=digits.pct, ...)
     }
     if (!is.list(x)) {
         stop("Expecting a list")
@@ -280,13 +280,12 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
         lapply(x, stats.apply.rounding, digits=digits, digits.pct=digits.pct,
             round.integers=round.integers, round5up=round5up, ...)
     } else {
-        cx <- lapply(x, format)
         r <- lapply(x, signif_pad, digits=digits,
                 round.integers=round.integers, round5up=round5up, ...)
         nr <- c("N", "FREQ")       # No rounding
         nr <- nr[nr %in% names(x)]
         nr <- nr[!is.na(x[nr])]
-        r[nr] <- cx[nr]
+        r[nr] <- lapply(x[nr], signif_pad, round.integers=F, ...)
         if (!round.median.min.max) {
             sr <- c("MEDIAN", "MIN", "MAX")  # Only add significant digits, don't remove any
             sr <- sr[sr %in% names(x)]
@@ -562,13 +561,19 @@ render.missing.default <- function(x, ...) {
 #' @keywords utilities
 #' @export
 render.varlabel <- function(x, transpose=F) {
-    if (has.units(x) && transpose) {
+    l <- if (has.units(x)) {
+        sprintf("%s (%s)", label(x), units(x))
+    } else {
+        sprintf("%s", label(x))
+    }
+    attr(l, "html") <- if (has.units(x) && transpose) {
         sprintf("<span class='varlabel'>%s<br/><span class='varunits'>(%s)</span></span>", label(x), units(x))
     } else if (has.units(x)) {
         sprintf("<span class='varlabel'>%s<span class='varunits'> (%s)</span></span>", label(x), units(x))
     } else {
         sprintf("<span class='varlabel'>%s</span>", label(x))
     }
+    l
 }
 
 #' Render strata labels for table output.
@@ -583,7 +588,11 @@ render.varlabel <- function(x, transpose=F) {
 #' @keywords internal
 #' @export
 render.strat.default <- function(label, n, transpose=F) {
-    sprintf("<span class='stratlabel'>%s<br><span class='stratn'>(N=%d)</span></span>", label, n)
+    sprintf(
+        ifelse(is.na(n), 
+            "<span class='stratlabel'>%s</span>",
+            "<span class='stratlabel'>%s<br><span class='stratn'>(N=%s)</span></span>"),
+        label, n)
 }
 
 #' Convert to HTML table rows.
@@ -672,6 +681,7 @@ table.data <- function(x, row.labels=rownames(x), th=FALSE, class=NULL, rowlabel
 #' @examples
 #' x <- 1:10
 #' label(x) <- "Foo"
+#' x <- setLabel(x, "Foo") # Alternative syntax
 #' has.label(x)
 #' label(x)
 #' @keywords utilities
@@ -683,6 +693,13 @@ table.data <- function(x, row.labels=rownames(x), th=FALSE, class=NULL, rowlabel
 #' @describeIn label Set label attribute.
 #' @export
 'label<-' <- function(x, value) {
+    attr(x, "label") <- value
+    x
+}
+
+#' @describeIn label Set label attribute.
+#' @export
+setLabel <- function(x, value) {
     attr(x, "label") <- value
     x
 }
@@ -739,6 +756,16 @@ has.units <- function(x) {
 #' facilitate this, some tags (such as row labels) are given specific classes
 #' for easy CSS selection.
 #' 
+#' For the formula version, the formula is expected to be a one-sided formula,
+#' optionally  with a vertical bar separating the variables that are to appear
+#' as data in the table (as rows) from those used for stratification (i.e.
+#' columns). There can be at most 2 variables for stratification (and only one
+#' if \code{transpose = TRUE} is specified), and if 2 are specified, the second
+#' is nested within the first. The formula may contain a dot (".") to refer to
+#' "all variables in \code{data} other than those that appear elsewhere in the
+#' formula". It is legitimate to use functions inside the formula to create new
+#' variables.
+#'
 #' For the default version, is is expected that \code{x} is a named
 #' list of \code{data.frame}s, one for each stratum, with names corresponding to
 #' strata labels.
@@ -762,7 +789,7 @@ has.units <- function(x) {
 #' strata. Note that this feature is not available when the option
 #' \code{transpose = TRUE} is specified.
 #'
-#' @param x An object, typically a \code{formula} or list of \code{data.frame}s.
+#' @param x An object, typically a \code{formula} or list of \code{data.frame}s (see Details).
 #' @param data For the formula interface, a \code{data.frame} from which the
 #' variables in \code{x} should be taken.
 #' @param overall A label for the "Overall" column. Specify \code{NULL} or
@@ -885,6 +912,9 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
     }
     x <- lapply(x, char2factor)
 
+    # Number of rows per stratum
+    strat_n <- sapply(x, nrow)
+
     any.missing <- sapply(names(labels$variables), function(v) do.call(sum, lapply(x, function(s) sum(is.na(s[[v]])))) > 0)
 
     if (transpose) {
@@ -892,8 +922,8 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
         if (ncolumns > 12) {
             warning(sprintf("Table has %d columns. Are you sure this is what you want?", ncolumns))
         }
-        thead <- t(unlist(labels$variables))
-        tbody <- lapply(names(x), function(s) {
+        headings <- t(unlist(labels$variables))
+        contents <- lapply(names(x), function(s) {
             do.call(cbind, lapply(names(labels$variables), function(v) {
                 lvls <- unique(do.call(c, lapply(x, function(s) levels(s[[v]]))))
                 z <- x[[s]][[v]]
@@ -904,14 +934,14 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
                 y <- paste0(y, collapse="<br/>")
                 names(y) <- labels$variables[[v]]
                 y <- t(y)
-                rownames(y) <- render.strat(labels$strata[s], nrow(x[[s]]))
+                rownames(y) <- render.strat(labels$strata[s], strat_n[s], ...)
                 y }))})
     } else {
-        thead <- t(render.strat(labels$strata[names(x)], sapply(x, nrow)))
+        headings <- rbind(labels$strata[names(x)], round_pad(strat_n, digits=0, ...))
         if (!is.null(extra.col)) {
-            thead <- cbind(thead, t(names(extra.col)))
+            headings <- cbind(headings, rbind(names(extra.col), rep(NA, length(extra.col))))
             if (!is.null(extra.col.pos)) {
-                if (!is.numeric(extra.col.pos) || any(extra.col.pos > ncol(thead))) {
+                if (!is.numeric(extra.col.pos) || any(extra.col.pos > ncol(headings))) {
                     stop("extra.col.pos should be a vector of column positions")
                 }
                 if (length(extra.col.pos) > length(extra.col)) {
@@ -919,18 +949,18 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
                 }
                 # Permute columns
                 s1 <- seq(length(x) + 1, length.out=length(extra.col.pos))
-                s2 <- setdiff(1:ncol(thead), s1)
-                colpermute <- rep(0, ncol(thead))
+                s2 <- setdiff(1:ncol(headings), s1)
+                colpermute <- rep(0, ncol(headings))
                 colpermute[extra.col.pos] <- s1
                 colpermute[-extra.col.pos] <- s2
-                thead <- thead[, colpermute, drop=F]
+                headings <- headings[, colpermute, drop=F]
             }
         }
-        ncolumns <- ncol(thead)
+        ncolumns <- ncol(headings)
         if (ncolumns > 12) {
             warning(sprintf("Table has %d columns. Are you sure this is what you want?", ncolumns))
         }
-        tbody <- lapply(names(labels$variables), function(v) {
+        contents <- lapply(names(labels$variables), function(v) {
             lvls <- unique(do.call(c, lapply(x, function(s) levels(s[[v]]))))
             y <- do.call(cbind, lapply(x, function(s) {
                 z <- s[[v]]
@@ -957,55 +987,221 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
             y })
     }
 
-    if (is.null(topclass) || topclass=="") {
-        topclass <- ""
-    } else if (is.character(topclass) && length(topclass)==1) {
-        topclass <- sprintf(' class="%s"', topclass)
-    } else {
-        stop("topclass should be character and of length 1.")
-    }
+    obj <- list(
+        contents     = contents,
+        headings     = headings,
+        labels       = labels,
+        topclass     = topclass,
+        ncolumns     = ncolumns,
+        groupspan    = groupspan,
+        transpose    = transpose,
+        rowlabelhead = rowlabelhead,
+        caption      = caption,
+        footnote     = footnote,
+        render.strat = render.strat)
 
-    if (!is.null(groupspan)) {
+    update_html(structure("", obj=obj))
+}
+
+#' Update HTML.
+#'
+#' Used to (re-)generate the HTML code for a \code{link{table1}} object. In
+#' most cases, this should not be used direction, unless you know what you are
+#' doing.
+#'
+#' @param x An object returned by \code{\link{table1}}.
+#' @return An object of class "table1" which contains the updated HTML.
+#' @export
+update_html <- function(x) {
+    obj <- attr(x, "obj")
+    with(obj, {
         if (transpose) {
-            stop("Nesting/grouping not supported with transpose = TRUE.")
+            thead <- headings
+        } else {
+            thead <- t(render.strat(headings[1,], headings[2,]))
         }
-        thead0 <- ifelse(is.na(labels$groups) | labels$groups=="", "", sprintf('<div>%s</div>', labels$groups))
-        thead0 <- sprintf('<th colspan="%d" class="grouplabel">%s</th>', groupspan, thead0)
-        thead0 <- c('<th class="grouplabel"></th>', thead0)
-        thead0 <- paste("<tr>\n", paste(thead0, sep="", collapse="\n"), "\n</tr>\n", sep="", collapse="")
-    } else {
-        thead0 <- ""
+
+        if (is.null(topclass) || topclass=="") {
+            topclass <- ""
+        } else if (is.character(topclass) && length(topclass)==1) {
+            topclass <- sprintf(' class="%s"', topclass)
+        } else {
+            stop("topclass should be character and of length 1.")
+        }
+
+        if (!is.null(groupspan)) {
+            if (transpose) {
+                stop("Nesting/grouping not supported with transpose = TRUE.")
+            }
+            thead0 <- ifelse(is.na(labels$groups) | labels$groups=="", "", sprintf('<div>%s</div>', labels$groups))
+            thead0 <- sprintf('<th colspan="%d" class="grouplabel">%s</th>', groupspan, thead0)
+            thead0 <- c('<th class="grouplabel"></th>', thead0)
+            thead0 <- paste("<tr>\n", paste(thead0, sep="", collapse="\n"), "\n</tr>\n", sep="", collapse="")
+        } else {
+            thead0 <- ""
+        }
+
+        if (is.null(rowlabelhead)) rowlabelhead <- ""
+
+        if (!is.null(caption)) {
+            caption <- sprintf('<caption>%s</caption>\n', caption)
+        } else {
+            caption <- ""
+        }
+
+        if (!is.null(footnote)) {
+            footnote <- sprintf('<p>%s</p>\n', footnote)
+            footnote <- paste0(footnote, collapse="\n")
+            tfoot <- sprintf('<tfoot><tr><td colspan="%d" class="Rtable1-footnote">%s</td></tr></tfoot>\n', ncolumns + 1, footnote)
+        } else {
+            tfoot <- ""
+        }
+
+        x <- paste0(
+            sprintf('<table%s>%s\n<thead>\n', topclass, caption),
+            thead0,
+            table.rows(thead, row.labels=rowlabelhead, th=T),
+            tfoot,
+            '</thead>\n<tbody>\n',
+            paste(sapply(contents, table.rows), collapse=""),
+            '</tbody>\n</table>\n')
+
+        structure(x, class=c("table1", "html", "character"), html=TRUE, obj=obj)
+    })
+}
+
+#' Convert a \code{table1} object to a \code{data.frame}.
+#'
+#' @param x An object returned by \code{\link{table1}}.
+#' @param ... Ignored.
+#' @return A \code{data.frame}.
+#' @export
+as.data.frame.table1 <- function(x, ...) {
+    obj <- attr(x, "obj")
+    with(obj, {
+        rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
+        z <- lapply(contents, function(y) {
+            y <- as.data.frame(y, stringsAsFactors=F)
+            y2 <- data.frame(x=paste0(c("", rep("\U{00A0}\U{00A0}", nrow(y) - 1)), rownames(y)), stringsAsFactors=F)
+            y <- cbind(setNames(y2, rlh), y)
+            y
+        })
+        df <- do.call(rbind, z)
+        df <- rbind(c("", ifelse(is.na(headings[2,]), "", sprintf("(N=%s)", headings[2,]))), df)
+        colnames(df) <- c(rlh, headings[1,])
+        rownames(df) <- NULL
+        noquote(df)
+    })
+}
+
+#' Convert a \code{table1} object to \code{flextable}.
+#'
+#' @param x An object returned by \code{\link{table1}}.
+#' @param ... Further options passed to \code{qflextable}.
+#' @return A \code{flextable} object.
+#' @note The \code{flextable} package needs to be installed for this to work.
+#' @export
+t1flex <- function(x, ...) {
+    if (!requireNamespace("flextable", quietly = TRUE)) {
+        stop("This function requires package 'flextable'. Please install it and try again.", call.=F)
     }
+    obj <- attr(x, "obj")
+    with(obj, {
+        rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
+        i <- lapply(contents, function(y) {
+            nrow(y)
+        })
+        i <- cumsum(c(1, i[-length(i)]))
+        z <- lapply(contents, function(y) {
+            y <- as.data.frame(y, stringsAsFactors=F)
+            y2 <- data.frame(x=paste0(c("", rep("\U{00A0}\U{00A0}", nrow(y) - 1)), rownames(y)), stringsAsFactors=F)
+            y <- cbind(setNames(y2, rlh), y)
+            y
+        })
+        df <- do.call(rbind, z)
+        colnames(df) <- c(rlh, sprintf(
+            ifelse(is.na(headings[2,]), "%s", "%s\n(N=%s)"), headings[1,], headings[2,]))
+        rownames(df) <- NULL
+        out <- flextable::qflextable(df, ...)
+        out <- align(out, j=2:(ncolumns+1), align="center", part="body")
+        out <- align(out, j=2:(ncolumns+1), align="center", part="header")
+        out <- flextable::bold(out, i=i, j=1)
+        if (!is.null(groupspan)) {
+            out <- flextable::add_header_row(out, values=c("", labels$groups), colwidths=c(1, groupspan))
+            out <- align(out, i=1, align="center", part="header")
+        }
+        if (!is.null(caption)) {
+            out <- flextable::set_caption(out, caption=caption)
+        }
+        if (!is.null(footnote)) {
+            out <- flextable::footnote(out, i=1, j=1, value=as_paragraph(footnote), ref_symbols="")
+        }
+        out
+    })
+}
 
-    if (is.null(rowlabelhead)) rowlabelhead <- ""
-
-    if (!is.null(caption)) {
-        caption <- sprintf('<caption>%s</caption>\n', caption)
-    } else {
-        caption <- ""
+#' Convert a \code{table1} object to \code{kabelExtra}.
+#'
+#' @param x An object returned by \code{\link{table1}}.
+#' @param booktabs Passed to \code{kbl} (default \code{TRUE}).
+#' @param ... Other options passed to \code{kbl}.
+#' @param format Passed to \code{kbl} (optional).
+#' @return A \code{kabelExtra} object.
+#' @note The \code{kableExtra} package needs to be installed for this to work.
+#' @export
+t1kable <- function(x, booktabs=TRUE, ..., format) {
+    if (!requireNamespace("kableExtra", quietly = TRUE)) {
+        stop("This function requires package 'kableExtra'. Please install it and try again.", call.=F)
     }
-
-    if (!is.null(footnote)) {
-        footnote <- sprintf('<p>%s</p>\n', footnote)
-        footnote <- paste0(footnote, collapse="\n")
-        tfoot <- sprintf('<tfoot><tr><td colspan="%d" class="Rtable1-footnote">%s</td></tr></tfoot>\n', ncolumns + 1, footnote)
-    } else {
-        tfoot <- ""
+    if (missing(format) || is.null(format)) {
+        format <- if (knitr::is_latex_output()) "latex" else "html"
     }
+    obj <- attr(x, "obj")
+    with(obj, {
+        rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
+        i <- lapply(contents, function(y) {
+            nrow(y) - 1
+        })
+        z <- lapply(contents, function(y) {
+            y <- as.data.frame(y[-1,], stringsAsFactors=F)
+            y2 <- data.frame(x=rownames(y), stringsAsFactors=F)
+            y <- cbind(setNames(y2, rlh), y)
+            y
+        })
+        names(i) <- labels$variables
+        df <- do.call(rbind, z)
 
-    x <- paste0(
-        sprintf('<table%s>%s\n<thead>\n', topclass, caption),
-        thead0,
-        table.rows(thead, row.labels=rowlabelhead, th=T),
-        tfoot,
-        '</thead>\n<tbody>\n',
-        paste(sapply(tbody, table.rows), collapse=""),
-        '</tbody>\n</table>\n')
+        # Try to create a multiline header but does not work
+        #if (format == "html") {
+        #    cn <- c(rlh, sprintf(ifelse(is.na(headings[2,]), "%s", "%s<br/>(N=%s)"), headings[1,], headings[2,]))
+        #} else {
+        #    cn <- c(rlh, sprintf(ifelse(is.na(headings[2,]), "%s", "%s\n(N=%s)"), headings[1,], headings[2,]))
+        #}
+        #colnames(df) <- cn
+        #if (format == "latex") {
+        #    cn <- linebreak(cn, align="c")
+        #}
 
-    structure(x, class=c("table1", "html", "character"), html=TRUE)
+        # Put the (N=xx) as first row of the table
+        df <- rbind(c("", ifelse(is.na(headings[2,]), "", sprintf("(N=%s)", headings[2,]))), df)
+        cn <- colnames(df) <- c(rlh, headings[1,])
+        rownames(df) <- NULL
+        out <- kableExtra::kbl(df, format=format, col.names=cn, row.names=F, escape=T, booktabs=booktabs, caption=caption, ...)
+        out <- kableExtra::pack_rows(out, index=c(" "=1, i))
+        #out <- kableExtra::pack_rows(out, index=i)
+        if (!is.null(groupspan)) {
+            groupspan <- setNames(groupspan, labels$groups)
+            out <- kableExtra::add_header_above(out, c(" "=1, groupspan))
+        }
+        if (!is.null(footnote)) {
+            out <- kableExtra::footnote(out, general=footnote, general_title="")
+        }
+        out
+    })
 }
 
 #' Print \code{table1} object.
+#'
 #' @param x An object returned by \code{\link{table1}}.
 #' @param ... Further arguments passed on to other \code{print} methods.
 #' @return Returns \code{x} invisibly.
@@ -1028,14 +1224,20 @@ print.table1 <- function(x, ...) {
 }
 
 #' Method for printing in a \code{knitr} context.
+#'
 #' @param x An object returned by \code{\link{table1}}.
 #' @param ... Further arguments passed on to \code{knitr::knit_print}.
+#' @details If the target is HTML, the usual internal formatting will be
+#' applied; otherwise, fall back to a `data.frame`.
 #' @importFrom knitr knit_print
 #' @export
 knit_print.table1 <- function(x, ...) {
-    knit_to_html <-
-        !is.null(knitr::opts_knit$get("rmarkdown.pandoc.to")) &&
-        grepl("^html", knitr::opts_knit$get("rmarkdown.pandoc.to"))
+
+    knit_to <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+
+    knit_to_html  <- .isTRUE(knitr::is_html_output())
+    knit_to_latex <- .isTRUE(knitr::is_latex_output())
+    knit_to_docx  <- .isTRUE(knit_to == "docx")
 
     if (knit_to_html) {
         x <- htmltools::HTML(x)
@@ -1044,24 +1246,58 @@ knit_print.table1 <- function(x, ...) {
             stylesheet="table1_defaults.css")
         x <- htmltools::div(class="Rtable1", default.style, x)
         knitr::knit_print(x, ...)
+    } else if (knit_to_latex) {
+        # For latex, use kableExtra by default, if installed
+        if (requireNamespace("kableExtra", quietly = TRUE)) {
+            knitr::knit_print(t1kable(x), ...)
+        } else {
+            message("Get nicer `table1` LaTeX output by simply installing the `kableExtra` package")
+            knitr::knit_print(knitr::kable(as.data.frame(x), booktabs=TRUE), ...)
+        }
+    } else if (knit_to_docx) {
+        # For docx, use flextable by default, if installed
+        if (requireNamespace("flextable", quietly = TRUE)) {
+            knitr::knit_print(t1flex(x), ...)
+        } else {
+            message("Get nicer `table1` .docx output by simply installing the `flextable` package")
+            knitr::knit_print(as.data.frame(x), ...)
+        }
     } else {
-        knitr::knit_print(as.character(x), ...)
+        # If not fall back to printing as data.frame
+        knitr::knit_print(as.data.frame(x), ...)
     }
 }
 
 #' @describeIn table1 The \code{formula} interface.
 #' @export
-#' @importFrom stats formula model.frame na.pass
+#' @importFrom stats formula model.frame na.pass terms
 #' @importFrom Formula Formula
 table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpose=FALSE, droplevels=TRUE, topclass="Rtable1", footnote=NULL, caption=NULL, render=render.default, render.strat=render.strat.default, extra.col=NULL, extra.col.pos=NULL, ...) {
     f <- Formula(x)
-    m1 <- model.frame(formula(f, rhs=1), data=data, na.action=na.pass)
-    for (i in 1:ncol(m1)) {
-        if (!has.label(m1[[i]])) {
-            label(m1[[i]]) <- names(m1)[i]
-        }
+    if (length(length(f)) != 2 || length(f)[2] < 1 || length(f)[2] > 2) {
+        stop(paste0("Invalid formula: ", paste0(x, collapse="")))
     }
-    if (length(f)[2] > 1) {
+    if (length(f)[1] > 0) {
+        warning("Unexpected LHS in formula ignored (table1 expects a 1-sided formula)")
+    }
+    if (length(f)[2] == 2) {
+        f2 <- formula(f)
+        f2[[2]][[3]] <- f[[2]][[2]]
+        f2[[2]][[2]] <- f[[2]][[3]]
+        f2 <- Formula(f2)
+
+        dot <- !is.null(attr(terms(Formula(formula(f, rhs=2)), data=data), "Formula_without_dot"))
+        dot2 <- !is.null(attr(terms(Formula(formula(f2, rhs=2)), data=data), "Formula_without_dot"))
+        if (dot && dot2) {
+            stop("Cannot have . in both parts of the formula")
+        }
+
+        if (dot || dot2) {
+            f <- attr(terms(f, data=data, dot="sequential"), "Formula_without_dot")
+            f2 <- attr(terms(f2, data=data, dot="sequential"), "Formula_without_dot")
+        }
+
+        m1 <- model.frame(formula(f2, rhs=2), data=data, na.action=na.pass)
         m2 <- model.frame(formula(f, rhs=2), data=data, na.action=na.pass)
         if (!all(sapply(m2, is.factor) | sapply(m2, is.character))) {
             warning("Terms to the right of '|' in formula 'x' define table columns and are expected to be factors with meaningful labels.")
@@ -1095,11 +1331,17 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
             }
         }
     } else {
+        m1 <- model.frame(formula(f, rhs=1), data=data, na.action=na.pass)
         m2 <- NULL
         if (is.null(overall) || (is.logical(overall) && overall == FALSE)) {
             stop("Table has no columns?!")
         }
         stratlabel <- overall 
+    }
+    for (i in 1:ncol(m1)) {
+        if (!has.label(m1[[i]])) {
+            label(m1[[i]]) <- names(m1)[i]
+        }
     }
 
     if (!is.null(m2)) {
@@ -1188,3 +1430,7 @@ subsetp <- function(x, ..., droplevels=TRUE) {
 .isFALSE <- function (x) {
     is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
+.isTRUE <- function (x) {
+    is.logical(x) && length(x) == 1L && !is.na(x) && x
+}
+
