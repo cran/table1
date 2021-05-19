@@ -1,7 +1,7 @@
 Package: table1
 Type: Package
-Version: 1.4
-Date: 2021-04-27
+Version: 1.4.1
+Date: 2021-05-18
 Title: Tables of Descriptive Statistics in HTML
 Authors@R: person("Benjamin", "Rich", role=c("aut", "cre", "cph"), email="mail@benjaminrich.net")
 Author: Benjamin Rich [aut, cre, cph]
@@ -19,6 +19,6 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2021-04-28 10:53:37 UTC; Ben
+Packaged: 2021-05-18 19:04:52 UTC; Ben
 Repository: CRAN
-Date/Publication: 2021-04-28 11:30:02 UTC
+Date/Publication: 2021-05-19 04:40:05 UTC
