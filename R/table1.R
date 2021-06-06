@@ -57,13 +57,14 @@ signif_pad <- function(x, digits=3, round.integers=TRUE, round5up=TRUE, dec, ...
     }
     eps <- if (round5up) x*(10^(-(digits + 3))) else 0
 
-    rx <- ifelse(x >= 10^digits & .isFALSE(round.integers),
+    rx <- ifelse(!is.na(x) & x >= 10^digits & .isFALSE(round.integers),
         round(x),
         signif(x+eps, digits))
 
-    cx <- do.call(formatC,
-        c(list(x=rx, digits=digits, format="fg", flag="#"),
-          args[names(args) %in% names(formals(formatC))]))
+    args1 <- c(list(x=rx, digits=digits, format="fg", flag="#"),
+        args[names(args) %in% names(formals(formatC))])
+    args1 <- args1[!duplicated(names(args1))]
+    cx <- do.call(formatC, args1)
 
     cx[is.na(x)] <- "0"                    # Put in a dummy value for missing x
     cx <- gsub("[^0-9]*$", "", cx)         # Remove any trailing non-digit characters
@@ -82,8 +83,20 @@ round_pad <- function (x, digits=2, round5up=TRUE, dec, ...) {
 
     rx <- round(x + eps, digits)
 
+    args1 <- c(list(x=rx, digits=digits, format="f", flag="0"),
+        args[names(args) %in% names(formals(formatC))])
+    args1 <- args1[!duplicated(names(args1))]
+    cx <- do.call(formatC, args1)
+    ifelse(is.na(x), NA, cx)
+}
+
+# Internal function
+format_n <- function (x, ...) {
+    args <- list(...)
+    args <- args[!(names(args) %in% c("format"))]
+
     cx <- do.call(formatC,
-        c(list(x=rx, digits=digits, format="f", flag="0"),
+        c(list(x=x, format="d"),
           args[names(args) %in% names(formals(formatC))]))
     ifelse(is.na(x), NA, cx)
 }
@@ -111,6 +124,7 @@ round_pad <- function (x, digits=2, round5up=TRUE, dec, ...) {
 #'   \item \code{MEDIAN}: the median of the non-missing values
 #'   \item \code{CV}: the percent coefficient of variation of the non-missing values
 #'   \item \code{GMEAN}: the geometric mean of the non-missing values if non-negative, or \code{NA}
+#'   \item \code{GSD}: the geometric standard devaition of the non-missing values if non-negative, or \code{NA}
 #'   \item \code{GCV}: the percent geometric coefficient of variation of the
 #'   non-missing values if non-negative, or \code{NA}
 #'   \item \code{qXX}: various quantiles (percentiles) of the non-missing
@@ -165,6 +179,7 @@ stats.default <- function(x, quantile.type=7, ...) {
             SD=NA,
             CV=NA,
             GMEAN=NA,
+            GSD=NA,
             GCV=NA,
             MEDIAN=NA,
             MIN=NA,
@@ -196,6 +211,7 @@ stats.default <- function(x, quantile.type=7, ...) {
             SD=sd(x, na.rm=TRUE),
             CV=100*sd(x, na.rm=TRUE)/abs(mean(x, na.rm=TRUE)),
             GMEAN=if (any(na.omit(x) <= 0)) NA else exp(mean(log(x), na.rm=TRUE)),
+            GSD=if (any(na.omit(x) <= 0)) NA else exp(sd(log(x), na.rm=TRUE)),
             GCV=if (any(na.omit(x) <= 0)) NA else 100*sqrt(exp(sd(log(x), na.rm=TRUE)^2) -1),
             MEDIAN=median(x, na.rm=TRUE),
             MIN=min(x, na.rm=TRUE),
@@ -243,6 +259,8 @@ stats.default <- function(x, quantile.type=7, ...) {
 #' up? The standard R approach is "go to the even digit" (IEC 60559 standard,
 #' see \code{\link{round}}), while some other softwares (e.g. SAS, Excel)
 #' always round up.
+#' @param rounding.fn The function to use to do the rounding. Defaults to
+#' \code{\link{signif_pad}}.
 #' @param ... Further arguments.
 #'
 #' @return A list with the same number of elements as \code{x}. The rounded
@@ -260,11 +278,11 @@ stats.default <- function(x, quantile.type=7, ...) {
 #'
 #' @keywords utilities
 #' @export
-stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max=TRUE, round.integers=TRUE, round5up=TRUE, ...) {
+stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max=TRUE, round.integers=TRUE, round5up=TRUE, rounding.fn=signif_pad, ...) {
     mindig <- function(x, digits) {
         cx <- format(x)
         ndig <- nchar(gsub("\\D", "", cx))
-        ifelse(ndig > digits, cx, signif_pad(x, digits=digits,
+        ifelse(ndig > digits, cx, rounding.fn(x, digits=digits,
                 round.integers=round.integers, round5up=round5up, ...))
     }
     format.percent <- function(x, digits) {
@@ -280,12 +298,12 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
         lapply(x, stats.apply.rounding, digits=digits, digits.pct=digits.pct,
             round.integers=round.integers, round5up=round5up, ...)
     } else {
-        r <- lapply(x, signif_pad, digits=digits,
+        r <- lapply(x, rounding.fn, digits=digits,
                 round.integers=round.integers, round5up=round5up, ...)
         nr <- c("N", "FREQ")       # No rounding
         nr <- nr[nr %in% names(x)]
         nr <- nr[!is.na(x[nr])]
-        r[nr] <- lapply(x[nr], signif_pad, round.integers=F, ...)
+        r[nr] <- lapply(x[nr], format_n, ...)
         if (!round.median.min.max) {
             sr <- c("MEDIAN", "MIN", "MAX")  # Only add significant digits, don't remove any
             sr <- sr[sr %in% names(x)]
@@ -392,7 +410,7 @@ render.default <- function(x, name, missing=any(is.na(x)), transpose=F,
 #' \code{character} vector.
 #'
 #' @details In abbreviated code, the words N, NMISS, MEAN, SD, MIN, MEDIAN,
-#' MAX, IQR, CV, GMEAN, GCV, FREQ and PCT are substituted for their respective
+#' MAX, IQR, CV, GMEAN, GSD, GCV, FREQ and PCT are substituted for their respective
 #' values (see \code{\link{stats.default}}). The substitution is case
 #' insensitive, and the substituted values are rounded appropriately (see
 #' \code{\link{stats.apply.rounding}}). Other text is left unchanged. The
@@ -913,7 +931,7 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
     x <- lapply(x, char2factor)
 
     # Number of rows per stratum
-    strat_n <- sapply(x, nrow)
+    strat_n <- format_n(sapply(x, nrow), ...)
 
     any.missing <- sapply(names(labels$variables), function(v) do.call(sum, lapply(x, function(s) sum(is.na(s[[v]])))) > 0)
 
@@ -937,7 +955,7 @@ table1.default <- function(x, labels, groupspan=NULL, rowlabelhead="", transpose
                 rownames(y) <- render.strat(labels$strata[s], strat_n[s], ...)
                 y }))})
     } else {
-        headings <- rbind(labels$strata[names(x)], round_pad(strat_n, digits=0, ...))
+        headings <- rbind(labels$strata[names(x)], strat_n)
         if (!is.null(extra.col)) {
             headings <- cbind(headings, rbind(names(extra.col), rep(NA, length(extra.col))))
             if (!is.null(extra.col.pos)) {
@@ -1123,12 +1141,12 @@ t1flex <- function(x, ...) {
             ifelse(is.na(headings[2,]), "%s", "%s\n(N=%s)"), headings[1,], headings[2,]))
         rownames(df) <- NULL
         out <- flextable::qflextable(df, ...)
-        out <- align(out, j=2:(ncolumns+1), align="center", part="body")
-        out <- align(out, j=2:(ncolumns+1), align="center", part="header")
+        out <- flextable::align(out, j=2:(ncolumns+1), align="center", part="body")
+        out <- flextable::align(out, j=2:(ncolumns+1), align="center", part="header")
         out <- flextable::bold(out, i=i, j=1)
         if (!is.null(groupspan)) {
             out <- flextable::add_header_row(out, values=c("", labels$groups), colwidths=c(1, groupspan))
-            out <- align(out, i=1, align="center", part="header")
+            out <- flextable::align(out, i=1, align="center", part="header")
         }
         if (!is.null(caption)) {
             out <- flextable::set_caption(out, caption=caption)
@@ -1179,7 +1197,7 @@ t1kable <- function(x, booktabs=TRUE, ..., format) {
         #}
         #colnames(df) <- cn
         #if (format == "latex") {
-        #    cn <- linebreak(cn, align="c")
+        #    cn <- kableExtra::linebreak(cn, align="c")
         #}
 
         # Put the (N=xx) as first row of the table
