@@ -32,19 +32,23 @@ melanoma2$ulcer <-
 label(melanoma2$sex)       <- "Sex"
 label(melanoma2$age)       <- "Age"
 label(melanoma2$ulcer)     <- "Ulceration"
-label(melanoma2$thickness) <- "Thickness"
+label(melanoma2$thickness) <- "Thicknessᵃ"
 
 units(melanoma2$age)       <- "years"
 units(melanoma2$thickness) <- "mm"
 
-table1(~ sex + age + ulcer + thickness | status, data=melanoma2, overall="Total")
+caption  <- "Basic stats"
+footnote <- "ᵃ Also known as Breslow thickness"
+
+table1(~ sex + age + ulcer + thickness | status, data=melanoma2,
+    overall=c(left="Total"), caption=caption, footnote=footnote)
 
 ## -----------------------------------------------------------------------------
 labels <- list(
     variables=list(sex="Sex",
                    age="Age (years)",
                    ulcer="Ulceration",
-                   thickness="Thickness (mm)"),
+                   thickness="Thicknessᵃ (mm)"),
     groups=list("", "", "Death"))
 
 # Remove the word "death" from the labels, since it now appears above
@@ -64,7 +68,7 @@ my.render.cat <- function(x) {
 }
 
 ## -----------------------------------------------------------------------------
-table1(strata, labels, groupspan=c(1, 1, 2),
+table1(strata, labels, groupspan=c(1, 1, 2), caption=caption, footnote=footnote,
        render.continuous=my.render.cont, render.categorical=my.render.cat)
 
 ## -----------------------------------------------------------------------------

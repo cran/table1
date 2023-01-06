@@ -124,7 +124,7 @@ format_n <- function (x, ...) {
 #'   \item \code{MEDIAN}: the median of the non-missing values
 #'   \item \code{CV}: the percent coefficient of variation of the non-missing values
 #'   \item \code{GMEAN}: the geometric mean of the non-missing values if non-negative, or \code{NA}
-#'   \item \code{GSD}: the geometric standard devaition of the non-missing values if non-negative, or \code{NA}
+#'   \item \code{GSD}: the geometric standard deviation of the non-missing values if non-negative, or \code{NA}
 #'   \item \code{GCV}: the percent geometric coefficient of variation of the
 #'   non-missing values if non-negative, or \code{NA}
 #'   \item \code{qXX}: various quantiles (percentiles) of the non-missing
@@ -146,6 +146,7 @@ format_n <- function (x, ...) {
 #'   \item \code{FREQ}: the frequency count
 #'   \item \code{PCT}: the percent relative frequency, including NA in the denominator
 #'   \item \code{PCTnoNA}: the percent relative frequency, excluding NA from the denominator
+#'   \item \code{NMISS}: the number of missing values
 #' }
 #'
 #' @examples
@@ -169,7 +170,7 @@ stats.default <- function(x, quantile.type=7, ...) {
         nn <- names(y)
         nn[is.na(nn)] <- "Missing"
         names(y) <- nn
-        lapply(y, function(z) list(FREQ=z, PCT=100*z/length(x), PCTnoNA=100*z/sum(y)))
+        lapply(y, function(z) list(FREQ=z, PCT=100*z/length(x), PCTnoNA=100*z/sum(y), NMISS=sum(is.na(x))))
     } else if (is.numeric(x) && sum(!is.na(x)) == 0) {
         list(
             N=sum(!is.na(x)),
@@ -242,7 +243,7 @@ stats.default <- function(x, quantile.type=7, ...) {
 #'
 #' Not all statistics should be rounded in the same way, or at all. This
 #' function will apply rounding selectively to a list of statistics as returned
-#' by \code{\link{stats.default}}. In particular we don't round counts (N and
+#' by \code{\link{stats.default}}. In particular we don't round counts (N, NMISS and
 #' FREQ), and for MIN, MAX and MEDIAN the \code{digits} is interpreted as the
 #' \emph{minimum} number of significant digits, so that we don't loose any
 #' precision. Percentages are rounded to a fixed number of decimal places
@@ -300,7 +301,7 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
     } else {
         r <- lapply(x, rounding.fn, digits=digits,
                 round.integers=round.integers, round5up=round5up, ...)
-        nr <- c("N", "FREQ")       # No rounding
+        nr <- c("N", "FREQ", "NMISS")       # No rounding
         nr <- nr[nr %in% names(x)]
         nr <- nr[!is.na(x[nr])]
         r[nr] <- lapply(x[nr], format_n, ...)
@@ -309,7 +310,7 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
             sr <- sr[sr %in% names(x)]
             r[sr] <- lapply(x[sr], mindig, digits=digits)
         }
-        pr <- c("PCT", "CV", "GCV")   # Percentages
+        pr <- c("PCT", "PCTnoNA", "CV", "GCV")   # Percentages
         pr <- pr[pr %in% names(x)]
         pr <- pr[!is.na(x[pr])]
         r[pr] <- lapply(as.numeric(x[pr]), format.percent, digits=digits.pct)
@@ -359,6 +360,7 @@ stats.apply.rounding <- function(x, digits=3, digits.pct=1, round.median.min.max
 #' render.default(y)
 #'
 #' @keywords utilities
+#' @importFrom stats setNames
 #' @export
 render.default <- function(x, name, missing=any(is.na(x)), transpose=F,
                            render.empty="NA",
@@ -372,7 +374,12 @@ render.default <- function(x, name, missing=any(is.na(x)), transpose=F,
         render.categorical <- parse.abbrev.render.code(code=render.categorical, ...)
     }
     if (!is.null(render.missing) && is.character(render.missing)) {
-        render.missing <- parse.abbrev.render.code(code=render.missing, ...)
+        nm <- names(render.missing)
+        if (is.null(nm)) nm <- "Missing"
+        render.missing.0 <- parse.abbrev.render.code(code=render.missing, ...)
+        render.missing <- function(x, ...) {
+            setNames(render.missing.0(is.na(x), ...)["Yes"], nm)
+        }
     }
     if (length(x) == 0) {
         return(render.empty)
@@ -779,10 +786,10 @@ has.units <- function(x) {
 #' as data in the table (as rows) from those used for stratification (i.e.
 #' columns). There can be at most 2 variables for stratification (and only one
 #' if \code{transpose = TRUE} is specified), and if 2 are specified, the second
-#' is nested within the first. The formula may contain a dot (".") to refer to
-#' "all variables in \code{data} other than those that appear elsewhere in the
-#' formula". It is legitimate to use functions inside the formula to create new
-#' variables.
+#' is nested within the first. Stratification variables may not contain missing
+#' values. The formula may contain a dot (".") to refer to "all variables in
+#' \code{data} other than those that appear elsewhere in the formula". It is
+#' legitimate to use functions inside the formula to create new variables.
 #'
 #' For the default version, is is expected that \code{x} is a named
 #' list of \code{data.frame}s, one for each stratum, with names corresponding to
@@ -811,7 +818,9 @@ has.units <- function(x) {
 #' @param data For the formula interface, a \code{data.frame} from which the
 #' variables in \code{x} should be taken.
 #' @param overall A label for the "Overall" column. Specify \code{NULL} or
-#' \code{FALSE} to omit the column altogether.
+#' \code{FALSE} to omit the column altogether. By default, the "Overall" column
+#' appears at the right end of the table; to place it on the left instead use a
+#' named \code{character} with the name "left", e.g. \code{c(left="Overall")}.
 #' @param labels A list containing labels for variables, strata and groups (see Details).
 #' @param groupspan A vector of integers specifying the number of strata to group together.
 #' @param rowlabelhead A heading for the first column of the table, which contains the row labels.
@@ -1097,10 +1106,10 @@ update_html <- function(x) {
 as.data.frame.table1 <- function(x, ...) {
     obj <- attr(x, "obj")
     with(obj, {
-        rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
+        rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") " " else rowlabelhead
         z <- lapply(contents, function(y) {
             y <- as.data.frame(y, stringsAsFactors=F)
-            y2 <- data.frame(x=paste0(c("", rep("\U{00A0}\U{00A0}", nrow(y) - 1)), rownames(y)), stringsAsFactors=F)
+            y2 <- data.frame(x=paste0(c("", rep("  ", nrow(y) - 1)), rownames(y)), stringsAsFactors=F)
             y <- cbind(setNames(y2, rlh), y)
             y
         })
@@ -1115,14 +1124,19 @@ as.data.frame.table1 <- function(x, ...) {
 #' Convert a \code{table1} object to \code{flextable}.
 #'
 #' @param x An object returned by \code{\link{table1}}.
-#' @param ... Further options passed to \code{qflextable}.
+#' @param tablefn Choose a function from the \code{flextable} package to use as
+#' the basis for the table.
+#' @param ... Further options passed to \code{tablefn}.
 #' @return A \code{flextable} object.
 #' @note The \code{flextable} package needs to be installed for this to work.
+#' @importFrom utils getFromNamespace
 #' @export
-t1flex <- function(x, ...) {
+t1flex <- function(x, tablefn=c("qflextable", "flextable", "regulartable"), ...) {
     if (!requireNamespace("flextable", quietly = TRUE)) {
         stop("This function requires package 'flextable'. Please install it and try again.", call.=F)
     }
+    tablefn <- match.arg(tablefn)
+    tablefn <- getFromNamespace(tablefn, "flextable")
     obj <- attr(x, "obj")
     with(obj, {
         rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
@@ -1140,19 +1154,20 @@ t1flex <- function(x, ...) {
         colnames(df) <- c(rlh, sprintf(
             ifelse(is.na(headings[2,]), "%s", "%s\n(N=%s)"), headings[1,], headings[2,]))
         rownames(df) <- NULL
-        out <- flextable::qflextable(df, ...)
+        out <- tablefn(df, ...)
         out <- flextable::align(out, j=2:(ncolumns+1), align="center", part="body")
         out <- flextable::align(out, j=2:(ncolumns+1), align="center", part="header")
         out <- flextable::bold(out, i=i, j=1)
         if (!is.null(groupspan)) {
-            out <- flextable::add_header_row(out, values=c("", labels$groups), colwidths=c(1, groupspan))
+            zzz <- ncol(df) - sum(groupspan) - 1
+            out <- flextable::add_header_row(out, values=c("", labels$groups, rep("", zzz)), colwidths=c(1, groupspan, rep(1, zzz)))
             out <- flextable::align(out, i=1, align="center", part="header")
         }
         if (!is.null(caption)) {
             out <- flextable::set_caption(out, caption=caption)
         }
         if (!is.null(footnote)) {
-            out <- flextable::footnote(out, i=1, j=1, value=as_paragraph(footnote), ref_symbols="")
+            out <- flextable::add_footer_lines(out, values=footnote)
         }
         out
     })
@@ -1178,11 +1193,19 @@ t1kable <- function(x, booktabs=TRUE, ..., format) {
     with(obj, {
         rlh <- if (is.null(rowlabelhead) || rowlabelhead=="") "\U{00A0}" else rowlabelhead
         i <- lapply(contents, function(y) {
-            nrow(y) - 1
+            if (all(y[1,, drop=T] == "")) {
+                nrow(y) - 1
+            } else {
+                nrow(y)
+            }
         })
         z <- lapply(contents, function(y) {
-            y <- as.data.frame(y[-1,], stringsAsFactors=F)
-            y2 <- data.frame(x=rownames(y), stringsAsFactors=F)
+            if (all(y[1,, drop=T] == "")) {
+                y <- as.data.frame(y[-1,, drop=F], stringsAsFactors=F)
+                y2 <- data.frame(x=rownames(y), stringsAsFactors=F)
+            } else {
+                y2 <- data.frame(x="", stringsAsFactors=F)
+            }
             y <- cbind(setNames(y2, rlh), y)
             y
         })
@@ -1209,7 +1232,9 @@ t1kable <- function(x, booktabs=TRUE, ..., format) {
         #out <- kableExtra::pack_rows(out, index=i)
         if (!is.null(groupspan)) {
             groupspan <- setNames(groupspan, labels$groups)
-            out <- kableExtra::add_header_above(out, c(" "=1, groupspan))
+            zzz <- ncol(df) - sum(groupspan) - 1
+            out <- kableExtra::add_header_above(out,
+                data.frame(c(" ", names(groupspan), rep(" ", zzz)), c(1, groupspan, rep(1, zzz))))
         }
         if (!is.null(footnote)) {
             out <- kableExtra::footnote(out, general=footnote, general_title="")
@@ -1295,6 +1320,9 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
     if (length(length(f)) != 2 || length(f)[2] < 1 || length(f)[2] > 2) {
         stop(paste0("Invalid formula: ", paste0(x, collapse="")))
     }
+    if (!is.null(overall) && length(overall) != 1) {
+        stop("overall should have length 1 (unless NULL)")
+    }
     if (length(f)[1] > 0) {
         warning("Unexpected LHS in formula ignored (table1 expects a 1-sided formula)")
     }
@@ -1320,6 +1348,9 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
         if (!all(sapply(m2, is.factor) | sapply(m2, is.character))) {
             warning("Terms to the right of '|' in formula 'x' define table columns and are expected to be factors with meaningful labels.")
         }
+        if (any(sapply(m2, function(xx) any(is.na(xx))))) {
+            stop("Stratification variable(s) should not contain missing values.")
+        }
         m2 <- lapply(m2, as.factor)
         if (droplevels) {
             m2 <- lapply(m2, droplevels)
@@ -1338,14 +1369,22 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
             groupspan <- sapply(collabels, length)
             stratlabel <- unlist(collabels)
             if (!is.null(overall) && overall != FALSE) {
-                grouplabel <- c(grouplabel, overall)
+                if (!is.null(names(overall)) && names(overall) == "left") {
+                    grouplabel <- c(overall, grouplabel)
+                } else {
+                    grouplabel <- c(grouplabel, overall)
+                }
                 groupspan <- c(groupspan, nlevels(m2[[2]]))
                 stratlabel <- c(stratlabel, levels(m2[[2]]))
             }
         } else {
             stratlabel <- levels(m2[[1]])
             if (!is.null(overall) && overall != FALSE) {
-                stratlabel <- c(stratlabel, overall)
+                if (!is.null(names(overall)) && names(overall) == "left") {
+                    stratlabel <- c(overall, stratlabel)
+                } else {
+                    stratlabel <- c(stratlabel, overall)
+                }
             }
         }
     } else {
@@ -1370,9 +1409,14 @@ table1.formula <- function(x, data, overall="Overall", rowlabelhead="", transpos
         }
         if (!is.null(overall) && overall != FALSE) {
             if (length(m2) > 1) {
-                strata <- c(strata, split(m1, data.frame(m2[[2]], overall="overall")))
+                overall.strata <- split(m1, data.frame(m2[[2]], overall="overall"))
             } else {
-                strata <- c(strata, list(overall=m1))
+                overall.strata <- list(overall=m1)
+            }
+            if (!is.null(names(overall)) && names(overall) == "left") {
+                strata <- c(overall.strata, strata)
+            } else {
+                strata <- c(strata, overall.strata)
             }
         }
     } else {

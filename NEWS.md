@@ -1,3 +1,27 @@
+# table1 1.4.3
+
+* Change space in `as.data.frame.table1()` (#60).
+
+* Add `NMISS` to output of `stats.default()` for categorical variables.
+
+* Handle `NMISS` properly in `stats.apply.rounding()` (no decimals).
+
+* Fix handling of abbreviated code with `render.missing`.
+
+* Correct default rounding of `PCTnoNA` (ie, using `digits.pct`).
+
+* Fix issue with `t1kable` (#82).
+
+* Fix a problem with `t1kable` when the row with the label contains data.
+
+* Choose between `qflextable`, `flextable` and `regulartable` in `t1flex`.
+
+* Add extra columns to groupspan headers in t1flex and t1kable (#93).
+
+* Option to place overall on the left (#88).
+
+* Missing values in stratification variable(s) raises and error (#80).
+
 # table1 1.4.2
 
 * Add option `rounding.fn` to `stats.apply.rounding()` to allow changing the

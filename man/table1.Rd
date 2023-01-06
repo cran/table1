@@ -79,7 +79,9 @@ a flag indicating whether we are in transpose mode or not. See
 variables in \code{x} should be taken.}
 
 \item{overall}{A label for the "Overall" column. Specify \code{NULL} or
-\code{FALSE} to omit the column altogether.}
+\code{FALSE} to omit the column altogether. By default, the "Overall" column
+appears at the right end of the table; to place it on the left instead use a
+named \code{character} with the name "left", e.g. \code{c(left="Overall")}.}
 
 \item{droplevels}{Should empty factor levels be dropped?}
 }
@@ -107,10 +109,10 @@ optionally  with a vertical bar separating the variables that are to appear
 as data in the table (as rows) from those used for stratification (i.e.
 columns). There can be at most 2 variables for stratification (and only one
 if \code{transpose = TRUE} is specified), and if 2 are specified, the second
-is nested within the first. The formula may contain a dot (".") to refer to
-"all variables in \code{data} other than those that appear elsewhere in the
-formula". It is legitimate to use functions inside the formula to create new
-variables.
+is nested within the first. Stratification variables may not contain missing
+values. The formula may contain a dot (".") to refer to "all variables in
+\code{data} other than those that appear elsewhere in the formula". It is
+legitimate to use functions inside the formula to create new variables.
 
 For the default version, is is expected that \code{x} is a named
 list of \code{data.frame}s, one for each stratum, with names corresponding to
@@ -137,11 +139,11 @@ strata. Note that this feature is not available when the option
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: The default interface, where \code{x} is a \code{data.frame}.
+\item \code{table1(default)}: The default interface, where \code{x} is a \code{data.frame}.
 
-\item \code{formula}: The \code{formula} interface.
+\item \code{table1(formula)}: The \code{formula} interface.
+
 }}
-
 \examples{
 
 dat <- expand.grid(id=1:10, sex=c("Male", "Female"), treat=c("Treated", "Placebo"))
