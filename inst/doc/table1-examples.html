@@ -12,7 +12,7 @@
 
 <meta name="author" content="Benjamin Rich" />
 
-<meta name="date" content="2023-01-05" />
+<meta name="date" content="2025-09-11" />
 
 <title>Using the table1 Package to Create HTML Tables of Descriptive Statistics</title>
 
@@ -29,125 +29,30 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">.Rtable1 table, table.Rtable1 {font-family: "Arial", Arial, sans-serif;font-size: 10pt;border-collapse: collapse;padding: 0px;margin: 0px;}.Rtable1 td {white-space:nowrap;}.Rtable1 th, .Rtable1 td {border: 0;text-align: center;padding: 0.5ex 1.5ex;margin: 0px;}.Rtable1 thead>tr:first-child>th {border-top: 2pt solid black;}.Rtable1 thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1 tbody>tr:last-child>td {border-bottom: 2pt solid black;}.Rtable1 th.grouplabel {padding-left: 0;padding-right: 0;}.Rtable1 th.grouplabel>div {margin-left: 1.5ex;margin-right: 1.5ex;border-bottom: 1pt solid black;}.Rtable1 th.grouplabel:last-child>div {margin-right: 0;}.Rtable1 .rowlabel {text-align: left;padding-left: 2.5ex;}.Rtable1 .firstrow.rowlabel {padding-left: 0.5ex;font-weight: bold;}.Rtable1-zebra tbody tr:nth-child(odd) {background-color: #eee;}table.Rtable1-times {font-family: "Times New Roman", Times, serif;}.Rtable1-shade th {background-color: #ccc;}.Rtable1-grid th, .Rtable1-grid td {border-left: 1pt solid black;border-right: 1pt solid black;}.Rtable1-grid thead>tr:first-child>th {border-top: 1pt solid black;}.Rtable1-grid thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1-grid tbody>tr:last-child>td {border-bottom: 1pt solid black;}.Rtable1-grid .firstrow, .Rtable1-grid .firstrow ~ td {border-top: 1pt solid black;}.Rtable1-grid th.grouplabel>div {margin-left: 0;margin-right: 0;border-bottom: 0;}.Rtable1-center td.rowlabel, .Rtable1-center td.firstrow.rowlabel {font-weight: bold;text-align: center;padding: 0.5ex 1.5ex;}.Rtable1 .Rtable1-footnote {font-size: smaller;padding: 0px;margin: 0px;text-align: left;white-space: normal;}</style>
+
 <style type="text/css">
-.Rtable1 table, table.Rtable1 {
-font-family: "Arial", Arial, sans-serif;
-font-size: 10pt;
-border-collapse: collapse;
-padding: 0px;
-margin: 0px;
-
-}
-.Rtable1 td {
-white-space:nowrap;
-}
-.Rtable1 th, .Rtable1 td {
-border: 0;
-text-align: center;
-padding: 0.5ex 1.5ex;
-margin: 0px;
-}
-.Rtable1 thead>tr:first-child>th {
-border-top: 2pt solid black;
-}
-.Rtable1 thead>tr:last-child>th {
-border-bottom: 1pt solid black;
-}
-.Rtable1 tbody>tr:last-child>td {
-border-bottom: 2pt solid black;
-}
-.Rtable1 th.grouplabel {
-padding-left: 0;
-padding-right: 0;
-}
-.Rtable1 th.grouplabel>div {
-margin-left: 1.5ex;
-margin-right: 1.5ex;
-border-bottom: 1pt solid black;
-}
-.Rtable1 th.grouplabel:last-child>div {
-margin-right: 0;
-}
-.Rtable1 .rowlabel {
-text-align: left;
-padding-left: 2.5ex;
-}
-.Rtable1 .firstrow.rowlabel {
-padding-left: 0.5ex;
-font-weight: bold;
-}
-
-.Rtable1-zebra tbody tr:nth-child(odd) {
-background-color: #eee;
-}
-
-table.Rtable1-times {
-font-family: "Times New Roman", Times, serif;
-}
-
-.Rtable1-shade th {
-background-color: #ccc;
-}
-
-.Rtable1-grid th, .Rtable1-grid td {
-border-left: 1pt solid black;
-border-right: 1pt solid black;
-}
-.Rtable1-grid thead>tr:first-child>th {
-border-top: 1pt solid black;
-}
-.Rtable1-grid thead>tr:last-child>th {
-border-bottom: 1pt solid black;
-}
-.Rtable1-grid tbody>tr:last-child>td {
-border-bottom: 1pt solid black;
-}
-.Rtable1-grid .firstrow, .Rtable1-grid .firstrow ~ td {
-border-top: 1pt solid black;
-}
-.Rtable1-grid th.grouplabel>div {
-margin-left: 0;
-margin-right: 0;
-border-bottom: 0;
-}
-
-.Rtable1-center td.rowlabel, .Rtable1-center td.firstrow.rowlabel {
-font-weight: bold;
-text-align: center;
-padding: 0.5ex 1.5ex;
-}
-
-.Rtable1 .Rtable1-footnote {
-font-size: smaller;
-padding: 0px;
-margin: 0px;
-text-align: left;
-white-space: normal;
-}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 </style>
 
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -158,58 +63,57 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -243,187 +147,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">table.custom {
-font-family: "Lucida Console", Monaco, monospace;
-border-collapse: collapse;
-font-size: 9pt;
-}
-.custom th {
-background-color: rgb(0, 100, 164);
-color: white;
-}
-.custom .firstrow, .custom .firstrow ~ td {
-border-top: 1pt solid black;
-}
-.custom td.rowlabel {
-color: DarkCyan;
-font-style: italic;
-}
-.custom td.firstrow.rowlabel {
-background-color: yellow;
-color: red;
-font-size: 12pt;
-}
-</style>
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 900px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#header {
-text-align: center;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
+<style type="text/css">table.custom {font-family: "Lucida Console", Monaco, monospace;border-collapse: collapse;font-size: 9pt;}.custom th {background-color: rgb(0, 100, 164);color: white;}.custom .firstrow, .custom .firstrow ~ td {border-top: 1pt solid black;}.custom td.rowlabel {color: DarkCyan;font-style: italic;}.custom td.firstrow.rowlabel {background-color: yellow;color: red;font-size: 12pt;}</style>
+<style type="text/css">body {background-color: #fff;margin: 1em auto;max-width: 900px;overflow: visible;padding-left: 2em;padding-right: 2em;font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;line-height: 1.35;}#header {text-align: center;}#TOC {clear: both;margin: 0 0 10px 10px;padding: 4px;width: 400px;border: 1px solid #CCCCCC;border-radius: 5px;background-color: #f6f6f6;font-size: 13px;line-height: 1.3;}#TOC .toctitle {font-weight: bold;font-size: 15px;margin-left: 5px;}#TOC ul {padding-left: 40px;margin-left: -1.5em;margin-top: 5px;margin-bottom: 5px;}#TOC ul ul {margin-left: -2em;}#TOC li {line-height: 16px;}p {margin: 0.5em 0;}blockquote {background-color: #f6f6f6;padding: 0.25em 0.75em;}hr {border-style: solid;border: none;border-top: 1px solid #777;margin: 28px 0;}dl {margin-left: 0;}dl dd {margin-bottom: 13px;margin-left: 13px;}dl dt {font-weight: bold;}ul {margin-top: 0;}ul li {list-style: circle outside;}ul ul {margin-bottom: 0;}pre, code {background-color: #f7f7f7;border-radius: 3px;color: #333;white-space: pre-wrap; }pre {border-radius: 3px;margin: 5px 0px 10px 0px;padding: 10px;}pre:not([class]) {background-color: #f7f7f7;}code {font-family: Consolas, Monaco, 'Courier New', monospace;font-size: 85%;}p > code, li > code {padding: 2px 0px;}div.figure {text-align: center;}img {background-color: #FFFFFF;padding: 2px;border: 1px solid #DDDDDD;border-radius: 3px;border: 1px solid #CCCCCC;margin: 0 5px;}h1 {margin-top: 0;font-size: 35px;line-height: 40px;}h2 {border-bottom: 4px solid #f7f7f7;padding-top: 10px;padding-bottom: 2px;font-size: 145%;}h3 {border-bottom: 2px solid #f7f7f7;padding-top: 10px;font-size: 120%;}h4 {border-bottom: 1px solid #f7f7f7;margin-left: 8px;font-size: 105%;}h5, h6 {border-bottom: 1px solid #ccc;font-size: 105%;}a {color: #0033dd;text-decoration: none;}a:hover {color: #6666ff; }a:visited {color: #800080; }a:visited:hover {color: #BB00BB; }a[href^="http:"] {text-decoration: underline; }a[href^="https:"] {text-decoration: underline; }code > span.kw { color: #555; font-weight: bold; } code > span.dt { color: #902000; } code > span.dv { color: #40a070; } code > span.bn { color: #d14; } code > span.fl { color: #d14; } code > span.ch { color: #d14; } code > span.st { color: #d14; } code > span.co { color: #888888; font-style: italic; } code > span.ot { color: #007020; } code > span.al { color: #ff0000; font-weight: bold; } code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } </style>
 
 
 
@@ -438,31 +163,32 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h1 class="title toc-ignore">Using the table1 Package to Create HTML
 Tables of Descriptive Statistics</h1>
 <h4 class="author">Benjamin Rich</h4>
-<h4 class="date">2023-01-05</h4>
+<h4 class="date">2025-09-11</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#example-1">Example 1</a></li>
-<li><a href="#example-2">Example 2</a></li>
-<li><a href="#using-abbreviated-code-to-specify-a-custom-renderer">Using
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#example-1" id="toc-example-1">Example 1</a></li>
+<li><a href="#example-2" id="toc-example-2">Example 2</a></li>
+<li><a href="#using-abbreviated-code-to-specify-a-custom-renderer" id="toc-using-abbreviated-code-to-specify-a-custom-renderer">Using
 abbreviated code to specify a custom renderer</a></li>
-<li><a href="#displaying-different-statistics-for-different-variables">Displaying
+<li><a href="#displaying-different-statistics-for-different-variables" id="toc-displaying-different-statistics-for-different-variables">Displaying
 different statistics for different variables</a></li>
-<li><a href="#changing-the-tables-appearance">Changing the table’s
+<li><a href="#changing-the-tables-appearance" id="toc-changing-the-tables-appearance">Changing the table’s
 appearance</a>
 <ul>
-<li><a href="#using-built-in-styles">Using built-in styles</a></li>
-<li><a href="#using-custom-css-to-control-the-tables-appearance">Using
-custom CSS to control the table’s appearance</a></li>
+<li><a href="#using-built-in-styles" id="toc-using-built-in-styles">Using built-in styles</a></li>
+<li><a href="#using-custom-css-to-control-the-tables-appearance" id="toc-using-custom-css-to-control-the-tables-appearance">Using custom
+CSS to control the table’s appearance</a></li>
 </ul></li>
-<li><a href="#extra-columns">Extra columns</a>
+<li><a href="#extra-columns" id="toc-extra-columns">Extra columns</a>
 <ul>
-<li><a href="#example-a-column-of-p-values">Example: a column of
+<li><a href="#example-a-column-of-p-values" id="toc-example-a-column-of-p-values">Example: a column of
 p-values</a></li>
 </ul></li>
-<li><a href="#transposed-table">Transposed table</a></li>
+<li><a href="#transposed-table" id="toc-transposed-table">Transposed
+table</a></li>
 </ul>
 </div>
 
@@ -492,33 +218,33 @@ blog post</a>, which is about how to accomplish a similar task using the
 <code>htmlTable</code> package. It uses the <code>melanoma</code> data
 set from the <code>boot</code> package for illustration, and I have
 copied here the code used to prepare the data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>melanoma2 <span class="ot">&lt;-</span> melanoma</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor the basic variables that</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we&#39;re interested in</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>melanoma2<span class="sc">$</span>status <span class="ot">&lt;-</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>status, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="co"># Reference</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Melanoma death&quot;</span>, </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Non-melanoma death&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(boot) </span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>melanoma2 <span class="ot">&lt;-</span> melanoma</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># Factor the basic variables that</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># we&#39;re interested in</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>melanoma2<span class="sc">$</span>status <span class="ot">&lt;-</span> </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>status, </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>         <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="co"># Reference</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>                  <span class="st">&quot;Melanoma death&quot;</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>                  <span class="st">&quot;Non-melanoma death&quot;</span>))</span></code></pre></div>
 <p>As a first attempt, we can do the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> <span class="fu">factor</span>(sex) <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">factor</span>(ulcer) <span class="sc">+</span> thickness <span class="sc">|</span> status, <span class="at">data=</span>melanoma2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> <span class="fu">factor</span>(sex) <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">factor</span>(ulcer) <span class="sc">+</span> thickness <span class="sc">|</span> status, <span class="at">data=</span>melanoma2)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Alive<br><span class="stratn">(N=134)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Melanoma death<br><span class="stratn">(N=57)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma death<br><span class="stratn">(N=14)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=205)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Alive<br /><span class="stratn">(N=134)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Melanoma death<br /><span class="stratn">(N=57)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma death<br /><span class="stratn">(N=14)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=205)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">factor(sex)</td>
+<td class="rowlabel firstrow"><span class="varlabel">factor(sex)</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -539,7 +265,7 @@ copied here the code used to prepare the data:</p>
 <td class="lastrow">79 (38.5%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">age</td>
+<td class="rowlabel firstrow"><span class="varlabel">age</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -560,7 +286,7 @@ copied here the code used to prepare the data:</p>
 <td class="lastrow">54.0 [4.00, 95.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">factor(ulcer)</td>
+<td class="rowlabel firstrow"><span class="varlabel">factor(ulcer)</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -581,7 +307,7 @@ copied here the code used to prepare the data:</p>
 <td class="lastrow">90 (43.9%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">thickness</td>
+<td class="rowlabel firstrow"><span class="varlabel">thickness</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -618,45 +344,45 @@ we want, and specify units for the continuous variables
 (<code>age</code> and <code>thickness</code>). We also specify that the
 overall column to be labeled “Total” and be positioned on the left, and
 add a caption and footnote:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>melanoma2<span class="sc">$</span>sex <span class="ot">&lt;-</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>sex, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>melanoma2<span class="sc">$</span>ulcer <span class="ot">&lt;-</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>ulcer, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Absent&quot;</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Present&quot;</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>sex)       <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>age)       <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>ulcer)     <span class="ot">&lt;-</span> <span class="st">&quot;Ulceration&quot;</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>thickness) <span class="ot">&lt;-</span> <span class="st">&quot;Thicknessᵃ&quot;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(melanoma2<span class="sc">$</span>age)       <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(melanoma2<span class="sc">$</span>thickness) <span class="ot">&lt;-</span> <span class="st">&quot;mm&quot;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>caption  <span class="ot">&lt;-</span> <span class="st">&quot;Basic stats&quot;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>footnote <span class="ot">&lt;-</span> <span class="st">&quot;ᵃ Also known as Breslow thickness&quot;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> ulcer <span class="sc">+</span> thickness <span class="sc">|</span> status, <span class="at">data=</span>melanoma2,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall=</span><span class="fu">c</span>(<span class="at">left=</span><span class="st">&quot;Total&quot;</span>), <span class="at">caption=</span>caption, <span class="at">footnote=</span>footnote)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>melanoma2<span class="sc">$</span>sex <span class="ot">&lt;-</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>sex, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                  <span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a> </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>melanoma2<span class="sc">$</span>ulcer <span class="ot">&lt;-</span> </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">factor</span>(melanoma2<span class="sc">$</span>ulcer, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Absent&quot;</span>, </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                  <span class="st">&quot;Present&quot;</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>sex)       <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>age)       <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>ulcer)     <span class="ot">&lt;-</span> <span class="st">&quot;Ulceration&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">label</span>(melanoma2<span class="sc">$</span>thickness) <span class="ot">&lt;-</span> <span class="st">&quot;Thicknessᵃ&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="fu">units</span>(melanoma2<span class="sc">$</span>age)       <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="fu">units</span>(melanoma2<span class="sc">$</span>thickness) <span class="ot">&lt;-</span> <span class="st">&quot;mm&quot;</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>caption  <span class="ot">&lt;-</span> <span class="st">&quot;Basic stats&quot;</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>footnote <span class="ot">&lt;-</span> <span class="st">&quot;ᵃ Also known as Breslow thickness&quot;</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> ulcer <span class="sc">+</span> thickness <span class="sc">|</span> status, <span class="at">data=</span>melanoma2,</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>    <span class="at">overall=</span><span class="fu">c</span>(<span class="at">left=</span><span class="st">&quot;Total&quot;</span>), <span class="at">caption=</span>caption, <span class="at">footnote=</span>footnote)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1"><caption>Basic stats</caption>
 
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Total<br><span class="stratn">(N=205)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Alive<br><span class="stratn">(N=134)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Melanoma death<br><span class="stratn">(N=57)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma death<br><span class="stratn">(N=14)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Total<br /><span class="stratn">(N=205)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Alive<br /><span class="stratn">(N=134)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Melanoma death<br /><span class="stratn">(N=57)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma death<br /><span class="stratn">(N=14)</span></span></th>
 </tr>
 <tfoot><tr><td colspan="5" class="Rtable1-footnote"><p>ᵃ Also known as Breslow thickness</p>
 </td></tr></tfoot>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -677,7 +403,7 @@ add a caption and footnote:</p>
 <td class="lastrow">7 (50.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -698,7 +424,7 @@ add a caption and footnote:</p>
 <td class="lastrow">65.0 [49.0, 86.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Ulceration</td>
+<td class="rowlabel firstrow"><span class="varlabel">Ulceration</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -719,7 +445,7 @@ add a caption and footnote:</p>
 <td class="lastrow">7 (50.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Thicknessᵃ (mm)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Thicknessᵃ<span class="varunits"> (mm)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -752,18 +478,18 @@ result, we need to customize the output further, and in this case that
 involves using the slightly more complicated “default”
 (i.e. non-formula) interface to <code>table1</code>.</p>
 <p>First, we set up our labels differently, using a list:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">variables=</span><span class="fu">list</span>(<span class="at">sex=</span><span class="st">&quot;Sex&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age=</span><span class="st">&quot;Age (years)&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ulcer=</span><span class="st">&quot;Ulceration&quot;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">thickness=</span><span class="st">&quot;Thicknessᵃ (mm)&quot;</span>),</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">groups=</span><span class="fu">list</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;Death&quot;</span>))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the word &quot;death&quot; from the labels, since it now appears above</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(melanoma2<span class="sc">$</span>status) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Melanoma&quot;</span>, <span class="st">&quot;Non-melanoma&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="at">variables=</span><span class="fu">list</span>(<span class="at">sex=</span><span class="st">&quot;Sex&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                   <span class="at">age=</span><span class="st">&quot;Age (years)&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                   <span class="at">ulcer=</span><span class="st">&quot;Ulceration&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>                   <span class="at">thickness=</span><span class="st">&quot;Thicknessᵃ (mm)&quot;</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="at">groups=</span><span class="fu">list</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="st">&quot;Death&quot;</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># Remove the word &quot;death&quot; from the labels, since it now appears above</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">levels</span>(melanoma2<span class="sc">$</span>status) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Melanoma&quot;</span>, <span class="st">&quot;Non-melanoma&quot;</span>)</span></code></pre></div>
 <p>Next, we set up our “strata”, or column, as a list of
 <code>data.frame</code>s, in the order we want them displayed:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">list</span>(<span class="at">Total=</span>melanoma2), <span class="fu">split</span>(melanoma2, melanoma2<span class="sc">$</span>status))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">list</span>(<span class="at">Total=</span>melanoma2), <span class="fu">split</span>(melanoma2, melanoma2<span class="sc">$</span>status))</span></code></pre></div>
 <p>Finally, we can customize the contents using custom renderers. A
 custom render can be a function that take a vector as the first argument
 and return a (named) character vector. There is also a simpler way to
@@ -771,17 +497,17 @@ customize the table contents using an abbreviated code syntax instead of
 a render function, but it allows less control over rounding (see below).
 Here, for example, we specify render functions for the continuous and
 categorical variables as follows:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my.render.cont <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">stats.apply.rounding</span>(<span class="fu">stats.default</span>(x), <span class="at">digits=</span><span class="dv">2</span>), <span class="fu">c</span>(<span class="st">&quot;&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Mean (SD)&quot;</span><span class="ot">=</span><span class="fu">sprintf</span>(<span class="st">&quot;%s (&amp;plusmn; %s)&quot;</span>, MEAN, SD)))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>my.render.cat <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="fu">sapply</span>(<span class="fu">stats.default</span>(x), <span class="cf">function</span>(y) <span class="fu">with</span>(y,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sprintf</span>(<span class="st">&quot;%d (%0.0f %%)&quot;</span>, FREQ, PCT))))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>my.render.cont <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">stats.apply.rounding</span>(<span class="fu">stats.default</span>(x), <span class="at">digits=</span><span class="dv">2</span>), <span class="fu">c</span>(<span class="st">&quot;&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>        <span class="st">&quot;Mean (SD)&quot;</span><span class="ot">=</span><span class="fu">sprintf</span>(<span class="st">&quot;%s (&amp;plusmn; %s)&quot;</span>, MEAN, SD)))</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>my.render.cat <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="fu">sapply</span>(<span class="fu">stats.default</span>(x), <span class="cf">function</span>(y) <span class="fu">with</span>(y,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>        <span class="fu">sprintf</span>(<span class="st">&quot;%d (%0.0f %%)&quot;</span>, FREQ, PCT))))</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>}</span></code></pre></div>
 <p>And here is the result:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">caption=</span>caption, <span class="at">footnote=</span>footnote,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">render.continuous=</span>my.render.cont, <span class="at">render.categorical=</span>my.render.cat)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">caption=</span>caption, <span class="at">footnote=</span>footnote,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>       <span class="at">render.continuous=</span>my.render.cont, <span class="at">render.categorical=</span>my.render.cat)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1"><caption>Basic stats</caption>
 
 <thead>
@@ -793,17 +519,17 @@ categorical variables as follows:</p>
 </tr>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Total<br><span class="stratn">(N=205)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Alive<br><span class="stratn">(N=134)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Melanoma<br><span class="stratn">(N=57)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma<br><span class="stratn">(N=14)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Total<br /><span class="stratn">(N=205)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Alive<br /><span class="stratn">(N=134)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Melanoma<br /><span class="stratn">(N=57)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Non-melanoma<br /><span class="stratn">(N=14)</span></span></th>
 </tr>
 <tfoot><tr><td colspan="5" class="Rtable1-footnote"><p>ᵃ Also known as Breslow thickness</p>
 </td></tr></tfoot>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -824,7 +550,7 @@ categorical variables as follows:</p>
 <td class="lastrow">7 (50 %)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age (years)</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -838,7 +564,7 @@ categorical variables as follows:</p>
 <td class="lastrow">65 (± 11)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Ulceration</td>
+<td class="rowlabel firstrow"><span class="varlabel">Ulceration</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -859,7 +585,7 @@ categorical variables as follows:</p>
 <td class="lastrow">7 (50 %)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Thicknessᵃ (mm)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Thicknessᵃ (mm)</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -900,40 +626,40 @@ simulated data.</p>
 clinical trial where subjects have been randomized in a 2:1 ratio to
 receive an active treatment or placebo. For simplicity, we will only
 consider three baseline characteristics: age, sex and weight.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n, ...) <span class="fu">factor</span>(<span class="fu">sample</span>(x, n, <span class="at">replace=</span>T, ...), <span class="at">levels=</span>x)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">146</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id=</span><span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>treat <span class="ot">&lt;-</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Treated&quot;</span>), n, <span class="at">prob=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># 2:1 randomization</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>age   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">18</span><span class="sc">:</span><span class="dv">65</span>, n, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>sex   <span class="ot">&lt;-</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>), n, <span class="at">prob=</span><span class="fu">c</span>(.<span class="dv">6</span>, .<span class="dv">4</span>))  <span class="co"># 60% female</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>wt    <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">rnorm</span>(n, <span class="fu">log</span>(<span class="dv">70</span>), <span class="fl">0.23</span>)), <span class="dv">1</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add some missing data</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>wt[<span class="fu">sample.int</span>(n, <span class="dv">5</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>age)   <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>sex)   <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>wt)    <span class="ot">&lt;-</span> <span class="st">&quot;Weight&quot;</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>treat) <span class="ot">&lt;-</span> <span class="st">&quot;Treatment Group&quot;</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dat<span class="sc">$</span>age)   <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dat<span class="sc">$</span>wt)    <span class="ot">&lt;-</span> <span class="st">&quot;kg&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n, ...) <span class="fu">factor</span>(<span class="fu">sample</span>(x, n, <span class="at">replace=</span>T, ...), <span class="at">levels=</span>x)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">427</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">146</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id=</span><span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>dat<span class="sc">$</span>treat <span class="ot">&lt;-</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Treated&quot;</span>), n, <span class="at">prob=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># 2:1 randomization</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>dat<span class="sc">$</span>age   <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">18</span><span class="sc">:</span><span class="dv">65</span>, n, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>dat<span class="sc">$</span>sex   <span class="ot">&lt;-</span> <span class="fu">f</span>(<span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>), n, <span class="at">prob=</span><span class="fu">c</span>(.<span class="dv">6</span>, .<span class="dv">4</span>))  <span class="co"># 60% female</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>dat<span class="sc">$</span>wt    <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">rnorm</span>(n, <span class="fu">log</span>(<span class="dv">70</span>), <span class="fl">0.23</span>)), <span class="dv">1</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co"># Add some missing data</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>dat<span class="sc">$</span>wt[<span class="fu">sample.int</span>(n, <span class="dv">5</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>age)   <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>sex)   <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>wt)    <span class="ot">&lt;-</span> <span class="st">&quot;Weight&quot;</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="fu">label</span>(dat<span class="sc">$</span>treat) <span class="ot">&lt;-</span> <span class="st">&quot;Treatment Group&quot;</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="fu">units</span>(dat<span class="sc">$</span>age)   <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="fu">units</span>(dat<span class="sc">$</span>wt)    <span class="ot">&lt;-</span> <span class="st">&quot;kg&quot;</span></span></code></pre></div>
 <p>Using the default settings, we obtain this table:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -951,7 +677,7 @@ consider three baseline characteristics: age, sex and weight.</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -969,7 +695,7 @@ consider three baseline characteristics: age, sex and weight.</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -999,18 +725,18 @@ consider three baseline characteristics: age, sex and weight.</p>
 continuous or categorical, these are reported as a distinct category
 (with count and percent).</p>
 <p>The “Overall” column can be easily removed (or relabeled):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">overall=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">overall=</span>F)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 </tr>
@@ -1025,7 +751,7 @@ continuous or categorical, these are reported as a distinct category
 <td class="lastrow">39.5 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 </tr>
@@ -1040,7 +766,7 @@ continuous or categorical, these are reported as a distinct category
 <td class="lastrow">41 (43.6%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 </tr>
@@ -1064,7 +790,7 @@ continuous or categorical, these are reported as a distinct category
 </div>
 <p>We can also have stratification by two variables, in which case they
 are nested. For example, to see each treatment group split by sex:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> wt <span class="sc">|</span> treat<span class="sc">*</span>sex, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> wt <span class="sc">|</span> treat<span class="sc">*</span>sex, <span class="at">data=</span>dat)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1075,17 +801,17 @@ are nested. For example, to see each treatment group split by sex:</p>
 </tr>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Female<br><span class="stratn">(N=34)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Male<br><span class="stratn">(N=18)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Female<br><span class="stratn">(N=53)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Male<br><span class="stratn">(N=41)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Female<br><span class="stratn">(N=87)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Male<br><span class="stratn">(N=59)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Female<br /><span class="stratn">(N=34)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Male<br /><span class="stratn">(N=18)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Female<br /><span class="stratn">(N=53)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Male<br /><span class="stratn">(N=41)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Female<br /><span class="stratn">(N=87)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Male<br /><span class="stratn">(N=59)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1112,7 +838,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1151,7 +877,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 </table>
 </div>
 <p>Or, switch the order:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> wt <span class="sc">|</span> sex<span class="sc">*</span>treat, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> wt <span class="sc">|</span> sex<span class="sc">*</span>treat, <span class="at">data=</span>dat)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1162,17 +888,17 @@ are nested. For example, to see each treatment group split by sex:</p>
 </tr>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=34)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=53)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=18)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=41)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=34)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=53)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=18)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=41)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1199,7 +925,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 <td class="lastrow">39.5 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1238,17 +964,17 @@ are nested. For example, to see each treatment group split by sex:</p>
 </table>
 </div>
 <p>Or, no stratification:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> treat <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt, <span class="at">data=</span>dat)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> treat <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt, <span class="at">data=</span>dat)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Treatment Group</td>
+<td class="rowlabel firstrow"><span class="varlabel">Treatment Group</span></td>
 <td class="firstrow"></td>
 </tr>
 <tr>
@@ -1260,7 +986,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 <td class="lastrow">94 (64.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 </tr>
 <tr>
@@ -1272,7 +998,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 </tr>
 <tr>
@@ -1284,7 +1010,7 @@ are nested. For example, to see each treatment group split by sex:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 </tr>
 <tr>
@@ -1308,18 +1034,18 @@ simply being assigned to placebo or active treatment, there were
 actually two doses of treatment randomized, 5 mg and 10 mg, and we want
 columns for each dose level separately, as well as for all treated
 subjects.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>dose <span class="ot">&lt;-</span> (dat<span class="sc">$</span>treat <span class="sc">!=</span> <span class="st">&quot;Placebo&quot;</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, n, <span class="at">replace=</span>T)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>dose <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>dose, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;5 mg&quot;</span>, <span class="st">&quot;10 mg&quot;</span>))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">split</span>(dat, dat<span class="sc">$</span>dose), <span class="fu">list</span>(<span class="st">&quot;All treated&quot;</span><span class="ot">=</span><span class="fu">subset</span>(dat, treat<span class="sc">==</span><span class="st">&quot;Treated&quot;</span>)), <span class="fu">list</span>(<span class="at">Overall=</span>dat))</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variables=</span><span class="fu">list</span>(<span class="at">age=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>age),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sex=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>sex),</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">wt=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>wt)),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">groups=</span><span class="fu">list</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Treated&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>dat<span class="sc">$</span>dose <span class="ot">&lt;-</span> (dat<span class="sc">$</span>treat <span class="sc">!=</span> <span class="st">&quot;Placebo&quot;</span>)<span class="sc">*</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, n, <span class="at">replace=</span>T)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>dat<span class="sc">$</span>dose <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>dose, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;5 mg&quot;</span>, <span class="st">&quot;10 mg&quot;</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>strata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">split</span>(dat, dat<span class="sc">$</span>dose), <span class="fu">list</span>(<span class="st">&quot;All treated&quot;</span><span class="ot">=</span><span class="fu">subset</span>(dat, treat<span class="sc">==</span><span class="st">&quot;Treated&quot;</span>)), <span class="fu">list</span>(<span class="at">Overall=</span>dat))</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="at">variables=</span><span class="fu">list</span>(<span class="at">age=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>age),</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>                   <span class="at">sex=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>sex),</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>                   <span class="at">wt=</span><span class="fu">render.varlabel</span>(dat<span class="sc">$</span>wt)),</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="at">groups=</span><span class="fu">list</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Treated&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1330,16 +1056,16 @@ subjects.</p>
 </tr>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">5 mg<br><span class="stratn">(N=43)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">10 mg<br><span class="stratn">(N=51)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">All treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">5 mg<br /><span class="stratn">(N=43)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">10 mg<br /><span class="stratn">(N=51)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">All treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1363,7 +1089,7 @@ subjects.</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1387,7 +1113,7 @@ subjects.</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1443,9 +1169,9 @@ itself be used as the row label. Significant digits can be controlled
 using the <code>digits</code> argument (default: 3). Here is a
 continuation of the example from the previous section that produces the
 desired result:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">render.continuous=</span><span class="fu">c</span>(<span class="at">.=</span><span class="st">&quot;Mean (CV%)&quot;</span>, <span class="at">.=</span><span class="st">&quot;Median [Min, Max]&quot;</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;Geo. mean (Geo. CV%)&quot;</span><span class="ot">=</span><span class="st">&quot;GMEAN (GCV%)&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">table1</span>(strata, labels, <span class="at">groupspan=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>       <span class="at">render.continuous=</span><span class="fu">c</span>(<span class="at">.=</span><span class="st">&quot;Mean (CV%)&quot;</span>, <span class="at">.=</span><span class="st">&quot;Median [Min, Max]&quot;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>                           <span class="st">&quot;Geo. mean (Geo. CV%)&quot;</span><span class="ot">=</span><span class="st">&quot;GMEAN (GCV%)&quot;</span>))</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -1456,16 +1182,16 @@ desired result:</p>
 </tr>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">5 mg<br><span class="stratn">(N=43)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">10 mg<br><span class="stratn">(N=51)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">All treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">5 mg<br /><span class="stratn">(N=43)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">10 mg<br /><span class="stratn">(N=51)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">All treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1497,7 +1223,7 @@ desired result:</p>
 <td class="lastrow">37.4 (37.6%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1521,7 +1247,7 @@ desired result:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1569,28 +1295,28 @@ desired result:</p>
 <p>Suppose it is desired to show the median and range for age, but the
 mean and standard deviation for weight. This can be achieved using a
 custom render function as follows:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rndr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, name, ...) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) <span class="fu">return</span>(<span class="fu">render.categorical.default</span>(x))</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    what <span class="ot">&lt;-</span> <span class="cf">switch</span>(name,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">age =</span> <span class="st">&quot;Median [Min, Max]&quot;</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">wt  =</span> <span class="st">&quot;Mean (SD)&quot;</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">parse.abbrev.render.code</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, what))(x)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">render=</span>rndr)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>rndr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, name, ...) {</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) <span class="fu">return</span>(<span class="fu">render.categorical.default</span>(x))</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    what <span class="ot">&lt;-</span> <span class="cf">switch</span>(name,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>        <span class="at">age =</span> <span class="st">&quot;Median [Min, Max]&quot;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        <span class="at">wt  =</span> <span class="st">&quot;Mean (SD)&quot;</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>    <span class="fu">parse.abbrev.render.code</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, what))(x)</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>}</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat,</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a>       <span class="at">render=</span>rndr)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1608,7 +1334,7 @@ custom render function as follows:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1626,7 +1352,7 @@ custom render function as follows:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1678,19 +1404,19 @@ row labels</li>
 </ul>
 <p>These styles can be selected using the <code>topclass</code> argument
 of <code>table1</code>. Some examples follow:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-zebra&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-zebra&quot;</span>)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1-zebra">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1708,7 +1434,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1726,7 +1452,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1752,19 +1478,19 @@ of <code>table1</code>. Some examples follow:</p>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid&quot;</span>)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1-grid">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1782,7 +1508,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1800,7 +1526,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1826,19 +1552,19 @@ of <code>table1</code>. Some examples follow:</p>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-shade Rtable1-times&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> wt <span class="sc">|</span> treat, <span class="at">data=</span>dat, <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-shade Rtable1-times&quot;</span>)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1-grid Rtable1-shade Rtable1-times">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1856,7 +1582,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1874,7 +1600,7 @@ of <code>table1</code>. Some examples follow:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1916,40 +1642,40 @@ header should contain the following:</p>
 <p>CSS allows fine control of the appearance of different elements in
 the table. For examples, if <code>style.css</code> contains the
 following definitions:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>table<span class="fu">.Rtable1</span> {</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span>: <span class="st">&quot;Lucida Console&quot;</span><span class="op">,</span> Monaco<span class="op">,</span> <span class="dv">monospace</span><span class="op">;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-collapse</span>: <span class="dv">collapse</span><span class="op">;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">9</span><span class="dt">pt</span><span class="op">;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.Rtable1</span> th {</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="fu">rgb(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">164</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">white</span><span class="op">;</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">.Rtable1</span> <span class="fu">.firstrow</span><span class="op">,</span> <span class="fu">.Rtable1</span> <span class="fu">.firstrow</span> <span class="op">~</span> td {</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-top</span>: <span class="dv">1</span><span class="dt">pt</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">.Rtable1</span> td<span class="fu">.rowlabel</span> {</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">DarkCyan</span><span class="op">;</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-style</span>: <span class="dv">italic</span><span class="op">;</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="fu">.Rtable1</span> td<span class="fu">.firstrow.rowlabel</span> {</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span>: <span class="cn">yellow</span><span class="op">;</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">red</span><span class="op">;</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">12</span><span class="dt">pt</span><span class="op">;</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>table<span class="fu">.Rtable1</span> {</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;Lucida Console&quot;</span><span class="op">,</span> <span class="dv">Monaco</span><span class="op">,</span> <span class="dv">monospace</span><span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="kw">border-collapse</span><span class="ch">:</span> <span class="dv">collapse</span><span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">9</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>}</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="fu">.Rtable1</span> th {</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgb(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">164</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="fu">.Rtable1</span> <span class="fu">.firstrow</span><span class="op">,</span> <span class="fu">.Rtable1</span> <span class="fu">.firstrow</span> <span class="op">~</span> td {</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">pt</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>}</span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="fu">.Rtable1</span> td<span class="fu">.rowlabel</span> {</span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">DarkCyan</span><span class="op">;</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a>    <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">italic</span><span class="op">;</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a>}</span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="fu">.Rtable1</span> td<span class="fu">.firstrow.rowlabel</span> {</span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">yellow</span><span class="op">;</span></span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a>}</span></code></pre></div>
 <p>then the output will be as follows:</p>
 <div class="Rtable1"><table class="custom">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Placebo<br><span class="stratn">(N=52)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treated<br><span class="stratn">(N=94)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=146)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Placebo<br /><span class="stratn">(N=52)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treated<br /><span class="stratn">(N=94)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=146)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1967,7 +1693,7 @@ following definitions:</p>
 <td class="lastrow">39.0 [18.0, 65.0]</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Sex</td>
+<td class="rowlabel firstrow"><span class="varlabel">Sex</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -1985,7 +1711,7 @@ following definitions:</p>
 <td class="lastrow">59 (40.4%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Weight (kg)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Weight<span class="varunits"> (kg)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2039,40 +1765,40 @@ t-test for continuous variables (other tests could be used if desired,
 this is just for illustration purposes).</p>
 <p>First, we will assign factor levels, labels and units to the
 variables of interest.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MatchIt) </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(lalonde)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>lalonde<span class="sc">$</span>treat    <span class="ot">&lt;-</span> <span class="fu">factor</span>(lalonde<span class="sc">$</span>treat, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Treatment&quot;</span>))</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>lalonde<span class="sc">$</span>married  <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(lalonde<span class="sc">$</span>married <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>lalonde<span class="sc">$</span>nodegree <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(lalonde<span class="sc">$</span>nodegree <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>lalonde<span class="sc">$</span>race     <span class="ot">&lt;-</span> <span class="fu">factor</span>(lalonde<span class="sc">$</span>race, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;hispan&quot;</span>),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;White&quot;</span>, <span class="st">&quot;Black&quot;</span>, <span class="st">&quot;Hispanic&quot;</span>))</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>race)     <span class="ot">&lt;-</span> <span class="st">&quot;Race&quot;</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>married)  <span class="ot">&lt;-</span> <span class="st">&quot;Married&quot;</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>nodegree) <span class="ot">&lt;-</span> <span class="st">&quot;No high school diploma&quot;</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>age)      <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re74)     <span class="ot">&lt;-</span> <span class="st">&quot;1974 Income&quot;</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re75)     <span class="ot">&lt;-</span> <span class="st">&quot;1975 Income&quot;</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re78)     <span class="ot">&lt;-</span> <span class="st">&quot;1978 Income&quot;</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(lalonde<span class="sc">$</span>age)      <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">library</span>(MatchIt) </span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">data</span>(lalonde)</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>lalonde<span class="sc">$</span>treat    <span class="ot">&lt;-</span> <span class="fu">factor</span>(lalonde<span class="sc">$</span>treat, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Treatment&quot;</span>))</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>lalonde<span class="sc">$</span>married  <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(lalonde<span class="sc">$</span>married <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>lalonde<span class="sc">$</span>nodegree <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(lalonde<span class="sc">$</span>nodegree <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>lalonde<span class="sc">$</span>race     <span class="ot">&lt;-</span> <span class="fu">factor</span>(lalonde<span class="sc">$</span>race, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;white&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;hispan&quot;</span>),</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>                                         <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;White&quot;</span>, <span class="st">&quot;Black&quot;</span>, <span class="st">&quot;Hispanic&quot;</span>))</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>race)     <span class="ot">&lt;-</span> <span class="st">&quot;Race&quot;</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>married)  <span class="ot">&lt;-</span> <span class="st">&quot;Married&quot;</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>nodegree) <span class="ot">&lt;-</span> <span class="st">&quot;No high school diploma&quot;</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>age)      <span class="ot">&lt;-</span> <span class="st">&quot;Age&quot;</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re74)     <span class="ot">&lt;-</span> <span class="st">&quot;1974 Income&quot;</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re75)     <span class="ot">&lt;-</span> <span class="st">&quot;1975 Income&quot;</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a><span class="fu">label</span>(lalonde<span class="sc">$</span>re78)     <span class="ot">&lt;-</span> <span class="st">&quot;1978 Income&quot;</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a><span class="fu">units</span>(lalonde<span class="sc">$</span>age)      <span class="ot">&lt;-</span> <span class="st">&quot;years&quot;</span></span></code></pre></div>
 <p>Next, we create a function to compute the p-value for continuous or
 categorical variables.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Construct vectors of data y, and groups (strata) g</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">unlist</span>(x)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x), <span class="at">times=</span><span class="fu">sapply</span>(x, length)))</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.numeric</span>(y)) {</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For numeric variables, perform a standard 2-sample t-test</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        p <span class="ot">&lt;-</span> <span class="fu">t.test</span>(y <span class="sc">~</span> g)<span class="sc">$</span>p.value</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For categorical variables, perform a chi-squared test of independence</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        p <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(<span class="fu">table</span>(y, g))<span class="sc">$</span>p.value</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format the p-value, using an HTML entity for the less-than sign.</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The initial empty string places the output on the line below the variable label.</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="fu">sub</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="st">&quot;&amp;lt;&quot;</span>, <span class="fu">format.pval</span>(p, <span class="at">digits=</span><span class="dv">3</span>, <span class="at">eps=</span><span class="fl">0.001</span>)))</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>    <span class="co"># Construct vectors of data y, and groups (strata) g</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">unlist</span>(x)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    g <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x), <span class="at">times=</span><span class="fu">sapply</span>(x, length)))</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.numeric</span>(y)) {</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>        <span class="co"># For numeric variables, perform a standard 2-sample t-test</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>        p <span class="ot">&lt;-</span> <span class="fu">t.test</span>(y <span class="sc">~</span> g)<span class="sc">$</span>p.value</span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>        <span class="co"># For categorical variables, perform a chi-squared test of independence</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>        p <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(<span class="fu">table</span>(y, g))<span class="sc">$</span>p.value</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>    }</span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>    <span class="co"># Format the p-value, using an HTML entity for the less-than sign.</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>    <span class="co"># The initial empty string places the output on the line below the variable label.</span></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="fu">sub</span>(<span class="st">&quot;&lt;&quot;</span>, <span class="st">&quot;&amp;lt;&quot;</span>, <span class="fu">format.pval</span>(p, <span class="at">digits=</span><span class="dv">3</span>, <span class="at">eps=</span><span class="fl">0.001</span>)))</span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>}</span></code></pre></div>
 <p>Note that this function expects a specific input, namely a list with
 2 components corresponding to the 2 strata “Treatment” and “Control” in
 the <code>lalonde</code> data. These are the only 2 elements the list
@@ -2085,20 +1811,20 @@ would not work).</p>
 <p>Now, we supply our function in the <code>extra.col</code> list
 argument to <code>table1</code> with the name <code>P-value</code>,
 which will appear as the column label (heading).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> married <span class="sc">+</span> nodegree <span class="sc">+</span> re74 <span class="sc">+</span> re75 <span class="sc">+</span> re78 <span class="sc">|</span> treat,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>lalonde, <span class="at">overall=</span>F, <span class="at">extra.col=</span><span class="fu">list</span>(<span class="st">`</span><span class="at">P-value</span><span class="st">`</span><span class="ot">=</span>pvalue))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> race <span class="sc">+</span> married <span class="sc">+</span> nodegree <span class="sc">+</span> re74 <span class="sc">+</span> re75 <span class="sc">+</span> re78 <span class="sc">|</span> treat,</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="at">data=</span>lalonde, <span class="at">overall=</span>F, <span class="at">extra.col=</span><span class="fu">list</span>(<span class="st">`</span><span class="at">P-value</span><span class="st">`</span><span class="ot">=</span>pvalue))</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">Control<br><span class="stratn">(N=429)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Treatment<br><span class="stratn">(N=185)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Control<br /><span class="stratn">(N=429)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Treatment<br /><span class="stratn">(N=185)</span></span></th>
 <th class="firstrow lastrow"><span class="stratlabel">P-value</span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow">Age (years)</td>
+<td class="rowlabel firstrow"><span class="varlabel">Age<span class="varunits"> (years)</span></span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2116,7 +1842,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Race</td>
+<td class="rowlabel firstrow"><span class="varlabel">Race</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2140,7 +1866,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">Married</td>
+<td class="rowlabel firstrow"><span class="varlabel">Married</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2158,7 +1884,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">No high school diploma</td>
+<td class="rowlabel firstrow"><span class="varlabel">No high school diploma</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2176,7 +1902,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">1974 Income</td>
+<td class="rowlabel firstrow"><span class="varlabel">1974 Income</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2194,7 +1920,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">1975 Income</td>
+<td class="rowlabel firstrow"><span class="varlabel">1975 Income</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2212,7 +1938,7 @@ which will appear as the column label (heading).</p>
 <td class="lastrow"></td>
 </tr>
 <tr>
-<td class="rowlabel firstrow">1978 Income</td>
+<td class="rowlabel firstrow"><span class="varlabel">1978 Income</span></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
 <td class="firstrow"></td>
@@ -2246,61 +1972,61 @@ variables are continuous and when a compact representation is desired.
 It can be achieved by using the <code>transpose = TRUE</code>
 option.</p>
 <p>An example:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">i=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">group=</span>LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat, <span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">rnorm</span>(<span class="dv">6</span><span class="sc">*</span><span class="fu">nrow</span>(dat))), <span class="dv">1</span>), <span class="at">nrow=</span><span class="fu">nrow</span>(dat)))</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat)[<span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">i=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">group=</span>LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dat, <span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">rnorm</span>(<span class="dv">6</span><span class="sc">*</span><span class="fu">nrow</span>(dat))), <span class="dv">1</span>), <span class="at">nrow=</span><span class="fu">nrow</span>(dat)))</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="fu">names</span>(dat)[<span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;V&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
 <p>Default:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> V1 <span class="sc">+</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> V4 <span class="sc">+</span> V5 <span class="sc">+</span> V6 <span class="sc">|</span> group, <span class="at">data=</span>dat,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-center&quot;</span>,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">render=</span><span class="st">&quot;Mean (CV%)&lt;br/&gt;Median [Min, Max]&lt;br/&gt;GMean (GCV%)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> V1 <span class="sc">+</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> V4 <span class="sc">+</span> V5 <span class="sc">+</span> V6 <span class="sc">|</span> group, <span class="at">data=</span>dat,</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>       <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-center&quot;</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>       <span class="at">render=</span><span class="st">&quot;Mean (CV%)&lt;br/&gt;Median [Min, Max]&lt;br/&gt;GMean (GCV%)&quot;</span>)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1-grid Rtable1-center">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow"><span class="stratlabel">A<br><span class="stratn">(N=50)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">B<br><span class="stratn">(N=50)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">C<br><span class="stratn">(N=50)</span></span></th>
-<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=150)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">A<br /><span class="stratn">(N=50)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">B<br /><span class="stratn">(N=50)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">C<br /><span class="stratn">(N=50)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=150)</span></span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow lastrow">V1</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V1</span></td>
 <td class="firstrow lastrow">1.60 (122.5%)<br />1.15 [0.100, 12.7]<br />0.968 (148.9%)</td>
 <td class="firstrow lastrow">1.62 (152.1%)<br />1.00 [0.100, 13.6]<br />0.829 (169.3%)</td>
 <td class="firstrow lastrow">1.39 (141.5%)<br />1.00 [0.200, 13.4]<br />0.884 (113.7%)</td>
 <td class="firstrow lastrow">1.54 (138.7%)<br />1.00 [0.100, 13.6]<br />0.892 (142.2%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow">V2</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V2</span></td>
 <td class="firstrow lastrow">1.31 (139.0%)<br />0.850 [0.100, 11.4]<br />0.778 (130.4%)</td>
 <td class="firstrow lastrow">1.51 (102.3%)<br />0.900 [0.100, 7.00]<br />0.913 (146.1%)</td>
 <td class="firstrow lastrow">1.48 (158.2%)<br />0.800 [0.100, 13.4]<br />0.834 (135.1%)</td>
 <td class="firstrow lastrow">1.43 (134.0%)<br />0.900 [0.100, 13.4]<br />0.840 (136.1%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow">V3</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V3</span></td>
 <td class="firstrow lastrow">1.80 (115.5%)<br />1.10 [0.200, 8.90]<br />1.10 (125.2%)</td>
 <td class="firstrow lastrow">2.55 (333.0%)<br />1.00 [0.100, 60.5]<br />1.00 (145.7%)</td>
 <td class="firstrow lastrow">1.29 (93.6%)<br />1.05 [0.200, 7.40]<br />0.917 (101.6%)</td>
 <td class="firstrow lastrow">1.88 (270.7%)<br />1.05 [0.100, 60.5]<br />1.01 (123.2%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow">V4</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V4</span></td>
 <td class="firstrow lastrow">1.44 (107.6%)<br />0.900 [0.200, 6.70]<br />0.956 (106.6%)</td>
 <td class="firstrow lastrow">1.70 (150.8%)<br />1.20 [0.100, 18.0]<br />1.06 (121.8%)</td>
 <td class="firstrow lastrow">1.97 (129.1%)<br />0.850 [0.100, 12.2]<br />1.04 (157.2%)</td>
 <td class="firstrow lastrow">1.70 (132.9%)<br />0.900 [0.100, 18.0]<br />1.02 (127.0%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow">V5</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V5</span></td>
 <td class="firstrow lastrow">1.25 (105.2%)<br />0.800 [0.100, 7.70]<br />0.840 (112.3%)</td>
 <td class="firstrow lastrow">1.94 (128.5%)<br />1.15 [0.100, 15.1]<br />1.15 (138.2%)</td>
 <td class="firstrow lastrow">1.73 (80.3%)<br />1.40 [0.100, 7.10]<br />1.24 (113.0%)</td>
 <td class="firstrow lastrow">1.64 (111.2%)<br />1.15 [0.100, 15.1]<br />1.06 (122.7%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow">V6</td>
+<td class="rowlabel firstrow lastrow"><span class="varlabel">V6</span></td>
 <td class="firstrow lastrow">1.87 (204.2%)<br />0.900 [0.100, 26.4]<br />0.925 (157.1%)</td>
 <td class="firstrow lastrow">1.96 (152.9%)<br />1.00 [0.100, 19.9]<br />1.00 (174.5%)</td>
 <td class="firstrow lastrow">2.06 (125.6%)<br />1.00 [0.100, 12.0]<br />1.13 (150.1%)</td>
@@ -2310,25 +2036,25 @@ option.</p>
 </table>
 </div>
 <p>Transposed:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> V1 <span class="sc">+</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> V4 <span class="sc">+</span> V5 <span class="sc">+</span> V6 <span class="sc">|</span> group, <span class="at">data=</span>dat,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-center&quot;</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">render=</span><span class="st">&quot;Mean (CV%)&lt;br/&gt;Median [Min, Max]&lt;br/&gt;GMean (GCV%)&quot;</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">transpose=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">table1</span>(<span class="sc">~</span> V1 <span class="sc">+</span> V2 <span class="sc">+</span> V3 <span class="sc">+</span> V4 <span class="sc">+</span> V5 <span class="sc">+</span> V6 <span class="sc">|</span> group, <span class="at">data=</span>dat,</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>       <span class="at">topclass=</span><span class="st">&quot;Rtable1-grid Rtable1-center&quot;</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>       <span class="at">render=</span><span class="st">&quot;Mean (CV%)&lt;br/&gt;Median [Min, Max]&lt;br/&gt;GMean (GCV%)&quot;</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>       <span class="at">transpose=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="Rtable1"><table class="Rtable1-grid Rtable1-center">
 <thead>
 <tr>
 <th class="rowlabel firstrow lastrow"></th>
-<th class="firstrow lastrow">V1</th>
-<th class="firstrow lastrow">V2</th>
-<th class="firstrow lastrow">V3</th>
-<th class="firstrow lastrow">V4</th>
-<th class="firstrow lastrow">V5</th>
-<th class="firstrow lastrow">V6</th>
+<th class="firstrow lastrow"><span class="varlabel">V1</span></th>
+<th class="firstrow lastrow"><span class="varlabel">V2</span></th>
+<th class="firstrow lastrow"><span class="varlabel">V3</span></th>
+<th class="firstrow lastrow"><span class="varlabel">V4</span></th>
+<th class="firstrow lastrow"><span class="varlabel">V5</span></th>
+<th class="firstrow lastrow"><span class="varlabel">V6</span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="rowlabel firstrow lastrow"><span class="stratlabel">A<br><span class="stratn">(N=50)</span></span></td>
+<td class="rowlabel firstrow lastrow"><span class="stratlabel">A<br /><span class="stratn">(N=50)</span></span></td>
 <td class="firstrow lastrow">1.60 (122.5%)<br />1.15 [0.100, 12.7]<br />0.968 (148.9%)</td>
 <td class="firstrow lastrow">1.31 (139.0%)<br />0.850 [0.100, 11.4]<br />0.778 (130.4%)</td>
 <td class="firstrow lastrow">1.80 (115.5%)<br />1.10 [0.200, 8.90]<br />1.10 (125.2%)</td>
@@ -2337,7 +2063,7 @@ option.</p>
 <td class="firstrow lastrow">1.87 (204.2%)<br />0.900 [0.100, 26.4]<br />0.925 (157.1%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow"><span class="stratlabel">B<br><span class="stratn">(N=50)</span></span></td>
+<td class="rowlabel firstrow lastrow"><span class="stratlabel">B<br /><span class="stratn">(N=50)</span></span></td>
 <td class="firstrow lastrow">1.62 (152.1%)<br />1.00 [0.100, 13.6]<br />0.829 (169.3%)</td>
 <td class="firstrow lastrow">1.51 (102.3%)<br />0.900 [0.100, 7.00]<br />0.913 (146.1%)</td>
 <td class="firstrow lastrow">2.55 (333.0%)<br />1.00 [0.100, 60.5]<br />1.00 (145.7%)</td>
@@ -2346,7 +2072,7 @@ option.</p>
 <td class="firstrow lastrow">1.96 (152.9%)<br />1.00 [0.100, 19.9]<br />1.00 (174.5%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow"><span class="stratlabel">C<br><span class="stratn">(N=50)</span></span></td>
+<td class="rowlabel firstrow lastrow"><span class="stratlabel">C<br /><span class="stratn">(N=50)</span></span></td>
 <td class="firstrow lastrow">1.39 (141.5%)<br />1.00 [0.200, 13.4]<br />0.884 (113.7%)</td>
 <td class="firstrow lastrow">1.48 (158.2%)<br />0.800 [0.100, 13.4]<br />0.834 (135.1%)</td>
 <td class="firstrow lastrow">1.29 (93.6%)<br />1.05 [0.200, 7.40]<br />0.917 (101.6%)</td>
@@ -2355,7 +2081,7 @@ option.</p>
 <td class="firstrow lastrow">2.06 (125.6%)<br />1.00 [0.100, 12.0]<br />1.13 (150.1%)</td>
 </tr>
 <tr>
-<td class="rowlabel firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=150)</span></span></td>
+<td class="rowlabel firstrow lastrow"><span class="stratlabel">Overall<br /><span class="stratn">(N=150)</span></span></td>
 <td class="firstrow lastrow">1.54 (138.7%)<br />1.00 [0.100, 13.6]<br />0.892 (142.2%)</td>
 <td class="firstrow lastrow">1.43 (134.0%)<br />0.900 [0.100, 13.4]<br />0.840 (136.1%)</td>
 <td class="firstrow lastrow">1.88 (270.7%)<br />1.05 [0.100, 60.5]<br />1.01 (123.2%)</td>

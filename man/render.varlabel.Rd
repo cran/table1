@@ -2,13 +2,15 @@
 % Please edit documentation in R/table1.R
 \name{render.varlabel}
 \alias{render.varlabel}
-\title{Render variable labels for table output.}
+\title{Render variable labels for default table1 output.}
 \usage{
-render.varlabel(x, transpose = F)
+render.varlabel(x, ..., transpose = F)
 }
 \arguments{
 \item{x}{A vector, usually with the \code{\link{label}} and (if appropriate)
 \code{\link{unit}} attributes.}
+
+\item{...}{Additional arguments.}
 
 \item{transpose}{Logical indicating whether on not the table is transposed.}
 }
@@ -16,8 +18,9 @@ render.varlabel(x, transpose = F)
 A \code{character}, which may contain HTML markup.
 }
 \description{
-Called from \code{\link{table1.formula}} by default to render variable labels
-for displaying in the table.
+Called from \code{\link{table1.formula}} by default to render variable
+labels for displaying in the table. This is the default function, but it can
+be overriden by a user-supplied function.
 }
 \examples{
 x <- exp(rnorm(100, 1, 1))
