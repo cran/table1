@@ -1,7 +1,7 @@
 Package: table1
 Type: Package
-Version: 1.5.0
-Date: 2025-09-11
+Version: 1.5.1
+Date: 2025-09-19
 Title: Tables of Descriptive Statistics in HTML
 Authors@R: person("Benjamin", "Rich", role=c("aut", "cre", "cph"), email="mail@benjaminrich.net")
 Author: Benjamin Rich [aut, cre, cph]
@@ -21,6 +21,6 @@ Language: en-US
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2025-09-11 18:33:05 UTC; benja
+Packaged: 2025-09-19 16:22:47 UTC; benja
 Repository: CRAN
-Date/Publication: 2025-09-12 07:20:02 UTC
+Date/Publication: 2025-09-19 16:50:02 UTC
